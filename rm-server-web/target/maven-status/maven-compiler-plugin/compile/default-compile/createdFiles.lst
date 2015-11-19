@@ -1,0 +1,6 @@
+me\kuak\rm\server\web\rs\GroupEndpoint.class
+me\kuak\rm\server\web\rs\AuthEndpoint.class
+me\kuak\rm\server\web\rs\model\RsResponse.class
+me\kuak\rm\server\web\rs\ProfileEndpoint.class
+me\kuak\rm\server\web\rs\RallyEndpoint.class
+me\kuak\rm\server\web\rs\FileEndpoint.class
