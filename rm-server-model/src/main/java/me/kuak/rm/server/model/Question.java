@@ -1,26 +1,28 @@
 package me.kuak.rm.server.model;
 
-import java.util.List;
+import java.io.Serializable;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-public class Question {
+@Entity
+@Table
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "TYPE")
+@DiscriminatorValue("question")
+public class Question extends RallyObject implements Serializable {
 
-    private Integer id;
     private String plainText;
     private String htmlText;
-    private List<RmResource> resources;
     private Integer maxScore;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String type;
 
     public Integer getMaxScore() {
         return maxScore;
@@ -46,12 +48,12 @@ public class Question {
         this.htmlText = htmlText;
     }
 
-    public List<RmResource> getResources() {
-        return resources;
+    public String getType() {
+        return type;
     }
 
-    public void setResources(List<RmResource> resources) {
-        this.resources = resources;
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

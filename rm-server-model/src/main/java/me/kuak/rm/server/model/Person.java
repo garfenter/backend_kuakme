@@ -1,48 +1,40 @@
 package me.kuak.rm.server.model;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-public class Person {
+@Entity
+@Table
+@DiscriminatorValue("person")
+public class Person extends RallyObject implements Serializable {
 
-    private String name;
-    private String description;
-    private String password;
-    private List<RmResource> resources;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date birthdate;
+    private String school;
 
-    public String getName() {
-        return name;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSchool() {
+        return school;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<RmResource> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<RmResource> resources) {
-        this.resources = resources;
+    public void setSchool(String school) {
+        this.school = school;
     }
 
 }

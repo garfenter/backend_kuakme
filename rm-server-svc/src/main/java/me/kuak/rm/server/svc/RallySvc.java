@@ -4,7 +4,6 @@ import java.util.List;
 import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
-import me.kuak.rm.server.model.QuestionResult;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.Registration;
 
@@ -22,9 +21,9 @@ public interface RallySvc {
 
     public List<Question> goToCountry(Integer rallyId, Integer groupId, Integer countryId);
 
-    public List<Question> findRallyByCountryQuestions(Integer rallyId, Integer countryId);
+    public List<Question> findQuestionsByRallyCountry(Integer rallyId, Integer countryId);
 
     public List<Question> findRallyQuestions(Integer rallyId);
 
-    public QuestionResult answerQuestion(Integer rallyId, Integer countryId, Integer questionId, QuestionAnswer answer);
+    public QuestionAnswer answerQuestion(Integer rallyId, Integer countryId, Integer questionId, QuestionAnswer answer);
 }

@@ -1,7 +1,7 @@
 package me.kuak.rm.server.svc;
 
 import java.io.InputStream;
-import me.kuak.rm.server.model.Resource;
+import me.kuak.rm.server.model.RmResource;
 
 /**
  *
@@ -9,5 +9,5 @@ import me.kuak.rm.server.model.Resource;
  */
 public interface FileSvc {
 
-    public Resource uploadFile(InputStream data, String fileName);
+    public RmResource uploadFile(InputStream data, String fileName);
 }

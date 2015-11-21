@@ -1,46 +1,25 @@
 package me.kuak.rm.server.model;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-public class Rally {
+@Entity
+@Table
+@DiscriminatorValue("rally")
+public class Rally extends RallyObject implements Serializable {
 
-    private Integer id;
-    private String name;
-    private String description;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;
-    private List<RmResource> resources;
-    private Map<String, String> properties;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Date getStartDate() {
         return startDate;
@@ -56,22 +35,6 @@ public class Rally {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public List<RmResource> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<RmResource> resources) {
-        this.resources = resources;
-    }
-
-    public Map<String, String> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Map<String, String> properties) {
-        this.properties = properties;
     }
 
 }

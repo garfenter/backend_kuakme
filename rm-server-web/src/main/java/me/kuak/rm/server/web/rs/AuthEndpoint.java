@@ -1,26 +1,32 @@
 package me.kuak.rm.server.web.rs;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.validation.ValidationException;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import me.kuak.rm.server.model.AccessToken;
+import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.svc.AuthSvc;
+import me.kuak.rm.server.svc.QuestionSvc;
 import me.kuak.rm.server.web.rs.model.RsResponse;
-
-import static me.kuak.rm.server.web.rs.model.RsResponse.CODE_VALIDATION_ERROR;
 import static me.kuak.rm.server.web.rs.model.RsResponse.CODE_UNKNOWN_ERROR;
+import static me.kuak.rm.server.web.rs.model.RsResponse.CODE_VALIDATION_ERROR;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Path("auth")
+@Stateless
 public class AuthEndpoint {
 
-    @Inject
+    @EJB
     AuthSvc authSvc;
+    @EJB
+    QuestionSvc questionSvc;
 
     @POST
     @Path("authenticate")
@@ -37,5 +43,16 @@ public class AuthEndpoint {
             result.setCode(CODE_UNKNOWN_ERROR);
             return result;
         }
+    }
+
+    @GET
+    @Path("test")
+    public String test() {
+        MultipleValueQuestion mvq = new MultipleValueQuestion();
+        mvq.setDescription("test");
+        mvq.setHtmlText("test");
+        mvq.setMaxScore(1);
+        questionSvc.createQuestion(mvq);
+        return "OK";
     }
 }
