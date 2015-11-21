@@ -6,14 +6,14 @@ import javax.ejb.Stateless;
 import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.model.Person;
-import me.kuak.rm.server.svc.GroupsSvc;
+import me.kuak.rm.server.svc.GroupSvc;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Stateless
-public class GroupSvcImpl implements GroupsSvc {
+public class GroupSvcImpl implements GroupSvc {
 
     @EJB
     private RallyObjectDao rallyObjectDao;
