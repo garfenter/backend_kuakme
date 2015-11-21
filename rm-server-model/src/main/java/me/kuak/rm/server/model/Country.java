@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table
+@Table(name = "COUNTRY")
 @DiscriminatorValue("country")
 public class Country extends RallyObject implements Serializable {
 

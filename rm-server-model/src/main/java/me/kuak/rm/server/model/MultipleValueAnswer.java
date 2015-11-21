@@ -3,9 +3,12 @@ package me.kuak.rm.server.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -13,17 +16,22 @@ import javax.persistence.Table;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table
+@Table(name = "multiple_value_answer")
 public class MultipleValueAnswer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-
+    @Column(name = "text")
     private String text;
-    @Column(name = "VALUE_")
+    @Column(name = "value_")
     private String value;
+    @Column(name = "correct")
     private Boolean correct;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question")
+    private MultipleValueQuestion question;
 
     public Boolean isCorrect() {
         return correct;
@@ -55,6 +63,14 @@ public class MultipleValueAnswer implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public MultipleValueQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(MultipleValueQuestion question) {
+        this.question = question;
     }
 
 }

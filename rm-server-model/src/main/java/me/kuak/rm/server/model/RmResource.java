@@ -1,36 +1,48 @@
 package me.kuak.rm.server.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-@Table
+@Table(name = "RESOURCE")
 @Entity
 public class RmResource implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    private Integer parent;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
+    private RallyObject parent;
+    @Column(name = "download_url")
     private String downloadUrl;
+    @Column(name = "filename")
     private String filename;
+    @Column(name = "extension")
     private String extension;
+    @Column(name = "content_type")
     private String contentType;
+    @Column(name = "type")
     private String type;
 
-    public Integer getParent() {
+    public RallyObject getParent() {
         return parent;
     }
 
-    public void setParent(Integer parent) {
+    public void setParent(RallyObject parent) {
         this.parent = parent;
     }
 

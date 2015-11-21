@@ -9,6 +9,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,17 +24,21 @@ import javax.persistence.TemporalType;
 @DiscriminatorValue("group")
 public class Group extends RallyObject implements Serializable {
 
+    @Column(name = "password")
     private String password;
-    @Column(name = "USER_")
+    @Column(name = "user_")
     private String user;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBERS", referencedColumnName = "ID")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
     private List<Person> members;
-
+    @Column(name = "url")
     private String url;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_login")
     private Date lastLogin;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country")
+    private Country country;
 
     public String getPassword() {
         return password;
@@ -73,6 +78,14 @@ public class Group extends RallyObject implements Serializable {
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
 }

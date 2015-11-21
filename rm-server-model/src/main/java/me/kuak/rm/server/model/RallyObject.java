@@ -3,6 +3,7 @@ package me.kuak.rm.server.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,22 +21,24 @@ import javax.persistence.Table;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table
+@Table(name = "RALLY_OBJECT")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TYPE")
+@DiscriminatorColumn(name = "type")
 @DiscriminatorValue("base")
 public class RallyObject implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "type")
     private String type;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "PARENT")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
     private List<RmResource> resources;
 
     public List<RmResource> getResources() {

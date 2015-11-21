@@ -2,9 +2,12 @@ package me.kuak.rm.server.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -13,13 +16,18 @@ import javax.persistence.Temporal;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table
+@Table(name = "PERSON")
 @DiscriminatorValue("person")
 public class Person extends RallyObject implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "birthdate")
     private Date birthdate;
+    @Column(name = "school")
     private String school;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_")
+    private Group group;
 
     public Date getBirthdate() {
         return birthdate;
@@ -35,6 +43,14 @@ public class Person extends RallyObject implements Serializable {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
 }

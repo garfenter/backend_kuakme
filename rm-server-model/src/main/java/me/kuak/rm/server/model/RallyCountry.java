@@ -1,16 +1,30 @@
 package me.kuak.rm.server.model;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-public class RallyCountry {
+@Entity
+@Table(name = "RALLY_COUNTRY")
+public class RallyCountry extends RallyObject implements Serializable {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rally")
     private Rally rally;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country")
     private Country country;
-    private List<RmResource> resources;
 
     public Rally getRally() {
         return rally;
@@ -26,14 +40,6 @@ public class RallyCountry {
 
     public void setCountry(Country country) {
         this.country = country;
-    }
-
-    public List<RmResource> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<RmResource> resources) {
-        this.resources = resources;
     }
 
 }
