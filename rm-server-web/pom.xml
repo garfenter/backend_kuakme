@@ -98,7 +98,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.jsondoc</groupId>
+                <artifactId>jsondoc-maven-plugin</artifactId>
+                <version>1.2.9</version>
+                <configuration>
+                    <version>1.1</version>
+                    <basePath>http://localhost:8080/rm-server-web/rs/</basePath>
+                    <packages>
+                        <package>me.kuak.rm.server.web.rs</package>
+                        <package>me.kuak.rm.server.model</package>
+                    </packages>
+                    <outputFile>/tmp/jsondoc.json</outputFile>
+                    <scanner>org.jsondoc.core.scanner.DefaultJSONDocScanner</scanner>
+                    <playgroundEnabled>true</playgroundEnabled>
+                    <displayMethodAs>URI</displayMethodAs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    
 
 </project>
