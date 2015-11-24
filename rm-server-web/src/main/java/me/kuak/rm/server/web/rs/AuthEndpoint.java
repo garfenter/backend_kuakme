@@ -3,11 +3,10 @@ package me.kuak.rm.server.web.rs;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.ValidationException;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import me.kuak.rm.server.model.AccessToken;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
+import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.svc.QuestionSvc;
@@ -30,16 +29,20 @@ public class AuthEndpoint {
 
     @POST
     @Path("authenticate")
-    public RsResponse<AccessToken> authenticate(@QueryParam("user") String user, @QueryParam("password") String password) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public RsResponse<String> authenticate(@FormParam("user") String user, @FormParam("password") String password) {
         try {
-            RsResponse<AccessToken> result = new RsResponse<>(authSvc.authenticate(user, password));
+            RsResponse result = new RsResponse(authSvc.authenticate(user, password).getToken());
+            result.setCode(RsResponse.CODE_OK);
             return result;
         } catch (ValidationException v) {
-            RsResponse<AccessToken> result = new RsResponse<>(null);
+            RsResponse<String> result = new RsResponse<>(null);
+            result.setDescription(v.getMessage());
             result.setCode(CODE_VALIDATION_ERROR);
             return result;
         } catch (Throwable t) {
-            RsResponse<AccessToken> result = new RsResponse<>(null);
+            RsResponse<String> result = new RsResponse<>(null);
+            result.setDescription(t.getMessage());
             result.setCode(CODE_UNKNOWN_ERROR);
             return result;
         }
@@ -55,4 +58,15 @@ public class AuthEndpoint {
         questionSvc.createQuestion(mvq);
         return "OK";
     }
+
+    @GET
+    @Path("test2")
+    public Country test2() {
+        Country tmp = new Country();
+        tmp.setId(1);
+        tmp.setName("Guatemala");
+        tmp.setDescription("Guatemala!!!");
+        return tmp;
+    }
+
 }

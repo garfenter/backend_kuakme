@@ -8,6 +8,6 @@ import me.kuak.rm.server.model.AccessToken;
  */
 public interface AuthSvc {
 
-    public AccessToken authenticate(String user, String password);
+    AccessToken authenticate(String user, String password) throws Exception;
     
 }
