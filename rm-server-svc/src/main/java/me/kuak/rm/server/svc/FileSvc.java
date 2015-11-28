@@ -1,7 +1,11 @@
 package me.kuak.rm.server.svc;
 
+import java.io.File;
 import java.io.InputStream;
 import me.kuak.rm.server.model.RmResource;
+import org.apache.commons.fileupload.FileItem;
+
+import javax.xml.ws.Response;
 
 /**
  *
@@ -9,5 +13,7 @@ import me.kuak.rm.server.model.RmResource;
  */
 public interface FileSvc {
 
-    public RmResource uploadFile(InputStream data, String fileName);
+    void uploadFile(FileItem data, Integer parent, String type) throws Exception;
+
+    File downloadFile(Integer id);
 }
