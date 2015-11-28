@@ -1,6 +1,7 @@
 package me.kuak.rm.server.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -37,6 +40,11 @@ public class RallyObject implements Serializable {
     private String description;
     @Column(name = "type")
     private String type;
+    @Column(name = "status")
+    private StatusType status;
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
     private List<RmResource> resources;
@@ -79,6 +87,22 @@ public class RallyObject implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public StatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusType status) {
+        this.status = status;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
 }

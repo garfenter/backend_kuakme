@@ -14,4 +14,11 @@ import javax.persistence.Table;
 @DiscriminatorValue("country")
 public class Country extends RallyObject implements Serializable {
 
+    public Country() {
+    }
+
+    public Country(String name) {
+        setName(name);
+    }
+
 }

@@ -2,9 +2,13 @@ package me.kuak.rm.server.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -24,6 +28,9 @@ public class Rally extends RallyObject implements Serializable {
     @Column(name = "end_date")
     private Date endDate;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rally")
+    private List<RallyCountry> rallyCountries;
+
     public Date getStartDate() {
         return startDate;
     }
@@ -38,6 +45,14 @@ public class Rally extends RallyObject implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<RallyCountry> getRallyCountries() {
+        return rallyCountries;
+    }
+
+    public void setRallyCountries(List<RallyCountry> rallyCountries) {
+        this.rallyCountries = rallyCountries;
     }
 
 }

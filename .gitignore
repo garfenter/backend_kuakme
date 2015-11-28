@@ -1,3 +1,7 @@
 /rm-server-dao/target/
 /rm-server-dao-db/target/
+/rm-server-ear/target/
+/rm-server-model/target/
+/rm-server-svc/target/
 /rm-server-svc-impl/target/
+/rm-server-web/target/

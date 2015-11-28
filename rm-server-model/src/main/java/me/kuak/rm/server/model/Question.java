@@ -5,8 +5,11 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +31,11 @@ public class Question extends RallyObject implements Serializable {
     private Integer maxScore;
     @Column(name = "type")
     private String type;
+    @Column(name = "input_type")
+    private String inputType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rally_country")
+    private RallyCountry rallyCountry;
 
     public Integer getMaxScore() {
         return maxScore;
@@ -59,6 +67,22 @@ public class Question extends RallyObject implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getInputType() {
+        return inputType;
+    }
+
+    public void setInputType(String inputType) {
+        this.inputType = inputType;
+    }
+
+    public RallyCountry getRallyCountry() {
+        return rallyCountry;
+    }
+
+    public void setRallyCountry(RallyCountry rallyCountry) {
+        this.rallyCountry = rallyCountry;
     }
 
 }

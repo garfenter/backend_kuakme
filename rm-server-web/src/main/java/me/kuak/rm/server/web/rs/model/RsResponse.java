@@ -19,6 +19,13 @@ public class RsResponse<T> {
 
     public RsResponse(T result) {
         this.result = result;
+        this.code = CODE_OK;
+    }
+
+    public RsResponse(T result, int code, String description) {
+        this.result = result;
+        this.code = code;
+        this.description = description;
     }
 
     public int getCode() {

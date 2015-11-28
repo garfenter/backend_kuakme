@@ -36,7 +36,7 @@ public class Group extends RallyObject implements Serializable {
     @Column(name = "last_login")
     private Date lastLogin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "country")
     private Country country;
 

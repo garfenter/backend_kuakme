@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "multople_value_question")
+@Table(name = "multiple_value_question")
 @DiscriminatorValue("multiple-value-question")
 public class MultipleValueQuestion extends Question {
 
