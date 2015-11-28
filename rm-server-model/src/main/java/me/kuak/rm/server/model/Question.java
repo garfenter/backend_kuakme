@@ -1,6 +1,7 @@
 package me.kuak.rm.server.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -86,7 +87,7 @@ public class Question extends RallyObject implements Serializable {
     public RallyCountry getRallyCountry() {
         return rallyCountry;
     }
-
+    
     public void setRallyCountry(RallyCountry rallyCountry) {
         this.rallyCountry = rallyCountry;
     }

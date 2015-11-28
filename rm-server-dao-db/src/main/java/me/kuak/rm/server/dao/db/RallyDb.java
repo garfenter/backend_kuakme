@@ -10,8 +10,10 @@ import javax.persistence.TypedQuery;
 import me.kuak.rm.server.dao.RallyDao;
 import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.Group;
+import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.Rally;
+import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.StatusType;
 
@@ -27,7 +29,7 @@ public class RallyDb implements RallyDao {
 
     @Override
     public List<Question> findQuestionsByRallyIdAndCountryId(Integer rallyId, Integer countryId) {
-        TypedQuery<Question> qry = entityManager.createQuery("SELECT q FROM Question q WHERE q.rallyCountry.country.id = :countryId AND q.rallyCountry.rally.id = :rallyId", Question.class);
+        TypedQuery<Question> qry = entityManager.createQuery("SELECT q FROM Question q WHERE q.rallyCountry.country.id = :countryId AND q.rallyCountry.rally.id = :rallyId AND q.type='question'", Question.class);
         qry.setParameter("rallyId", rallyId);
         qry.setParameter("countryId", countryId);
         return qry.getResultList();
@@ -55,6 +57,23 @@ public class RallyDb implements RallyDao {
         registration.setGroup(entityManager.find(Group.class, groupId));
         entityManager.persist(registration);
         return registration;
+    }
+
+    @Override
+    public List<MultipleValueQuestion> findMultipleValueQuestionsByRallyIdAndCountryId(Integer rallyId, Integer countryId) {
+        TypedQuery<MultipleValueQuestion> qry = entityManager.createQuery("SELECT q FROM MultipleValueQuestion q WHERE q.rallyCountry.country.id = :countryId AND q.rallyCountry.rally.id = :rallyId", MultipleValueQuestion.class);
+        qry.setParameter("rallyId", rallyId);
+        qry.setParameter("countryId", countryId);
+        return qry.getResultList();
+    }
+
+    @Override
+    public RallyCountry findRallyCountry(Integer rallyId, Integer countryId) {
+        TypedQuery<RallyCountry> qry = entityManager.createQuery("SELECT rc FROM RallyCountry rc WHERE rc.country.id = :countryId AND rc.rally.id = :rallyId", RallyCountry.class);
+        qry.setParameter("rallyId", rallyId);
+        qry.setParameter("countryId", countryId);
+        List<RallyCountry> countries = qry.getResultList();
+        return countries.isEmpty() ? null : countries.get(0);
     }
 
 }

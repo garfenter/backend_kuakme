@@ -5,14 +5,12 @@ import javax.ejb.Stateless;
 import javax.validation.ValidationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import me.kuak.rm.server.model.Country;
-import me.kuak.rm.server.model.MultipleValueQuestion;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import me.kuak.rm.server.model.AccessToken;
 import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.svc.QuestionSvc;
-import me.kuak.rm.server.web.rs.model.RsResponse;
-import static me.kuak.rm.server.web.rs.model.RsResponse.CODE_UNKNOWN_ERROR;
-import static me.kuak.rm.server.web.rs.model.RsResponse.CODE_VALIDATION_ERROR;
 
 /**
  *
@@ -30,43 +28,28 @@ public class AuthEndpoint {
     @POST
     @Path("authenticate")
     @Produces(MediaType.APPLICATION_JSON)
-    public RsResponse<String> authenticate(@FormParam("user") String user, @FormParam("password") String password) {
+    public Response authenticate(@FormParam("user") String user, @FormParam("password") String password) {
         try {
-            RsResponse result = new RsResponse(authSvc.authenticate(user, password).getToken());
-            result.setCode(RsResponse.CODE_OK);
-            return result;
+            AccessToken token = authSvc.authenticate(user, password);
+            return Response.ok().cookie(new NewCookie("at", token.getToken())).build();
         } catch (ValidationException v) {
-            RsResponse<String> result = new RsResponse<>(null);
-            result.setDescription(v.getMessage());
-            result.setCode(CODE_VALIDATION_ERROR);
-            return result;
+            return Response.status(Status.FORBIDDEN).build();
         } catch (Throwable t) {
-            RsResponse<String> result = new RsResponse<>(null);
-            result.setDescription(t.getMessage());
-            result.setCode(CODE_UNKNOWN_ERROR);
-            return result;
+            return Response.status(Status.FORBIDDEN).build();
         }
     }
 
-    @GET
-    @Path("test")
-    public String test() {
-        MultipleValueQuestion mvq = new MultipleValueQuestion();
-        mvq.setDescription("test");
-        mvq.setHtmlText("test");
-        mvq.setMaxScore(1);
-        questionSvc.createQuestion(mvq);
-        return "OK";
+    @POST
+    @Path("logoff")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logoff() {
+        try {
+            return Response.ok().cookie(new NewCookie("at", "")).build();
+        } catch (ValidationException v) {
+            return Response.status(Status.FORBIDDEN).build();
+        } catch (Throwable t) {
+            return Response.status(Status.FORBIDDEN).build();
+        }
     }
-
-    @GET
-    @Path("test2")
-    public Country test2() {
-        Country tmp = new Country();
-        tmp.setId(1);
-        tmp.setName("Guatemala");
-        tmp.setDescription("Guatemala!!!");
-        return tmp;
-    }
-
+    
 }

@@ -47,13 +47,13 @@ public class RallyObject implements Serializable {
     private Date creationDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
-    private List<? extends RmResource> resources;
+    private List<RmResource> resources;
 
-    public List<? extends RmResource> getResources() {
+    public List<RmResource> getResources() {
         return resources;
     }
 
-    public void setResources(List<? extends RmResource> resources) {
+    public void setResources(List<RmResource> resources) {
         this.resources = resources;
     }
 

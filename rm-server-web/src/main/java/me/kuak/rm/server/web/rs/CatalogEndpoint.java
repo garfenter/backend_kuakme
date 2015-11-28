@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -12,8 +13,9 @@ import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.CountryDao;
 import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.dao.ResourceDao;
-import me.kuak.rm.server.model.AnimatedResource;
 import me.kuak.rm.server.model.Country;
+import me.kuak.rm.server.model.MultipleValueAnswer;
+import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
@@ -44,11 +46,36 @@ public class CatalogEndpoint {
         return countryDao.findAllCountries();
     }
 
+    @PUT
+    @Path("/countries")
+    @Produces
+    public Country createCountry(Country country) {
+        rallyObjectDao.createRallyObject(country);
+        return country;
+    }
+
     @GET
     @Path("/assets/{type}s")
     @Produces(MediaType.APPLICATION_JSON)
     public List<RmResource> findResourcesByType(@PathParam("type") String type) {
         return resourceDao.findResourcesByType(type);
+    }
+
+    @PUT
+    @Path("/assets/{type}s")
+    public RmResource addResource(@PathParam("type") String type, RmResource resource) {
+        resource.setType(type);
+        return resourceDao.createResource(resource);
+    }
+
+    @PUT
+    @Path("/{type}/{id}/resouces")
+    public RmResource addResourceToObject(@PathParam("String type") String type, @PathParam("id") Integer id, RmResource resource) throws ClassNotFoundException {
+        RallyObject object = rallyObjectDao.findRallyObjectById(id, Class.forName("me.kuak.rm.server.model." + type));
+        object.getResources().add(resource);
+        resource.setParent(object);
+        resourceDao.createResource(resource);
+        return resource;
     }
 
     @GET
@@ -130,6 +157,10 @@ public class CatalogEndpoint {
                 question3.setBackground("day");
                 question3.setResources(createResourcesStage1(question3));
                 rallyCountry.getQuestions().add(question3);
+                rallyCountry.getQuestions().add(createMultipleValueQuestions("¿Cual es la capital de ${country.name}?", new String[]{"Guatemala", "Mexico DF", "Brasilia", "Panama"}, 2, rallyCountry));
+                rallyCountry.getQuestions().add(createMultipleValueQuestions("¿Cual es el ave nacional de ${country.name}?", new String[]{"Quetzal", "Aguila real", "Turus", "Aguila Arpia"}, 2, rallyCountry));
+                rallyCountry.getQuestions().add(createMultipleValueQuestions("¿Cual es la comidia tipica de ${country.name}?", new String[]{"Pepian", "Tacos", "Viajejet", "Sancocho"}, 2, rallyCountry));
+                rallyCountry.getQuestions().add(createMultipleValueQuestions("¿Cual es el volcan mas alto de ${country.name}?", new String[]{"Tajumulco", "Popocatepe", "Citlaltépetl", "Barú"}, 2, rallyCountry));
             }
             rallyObjectDao.createRallyObject(rally);
             return rally;
@@ -139,30 +170,30 @@ public class CatalogEndpoint {
         }
     }
 
-    public List<AnimatedResource> createResourcesStage1(RallyObject parent) {
-        List<AnimatedResource> result = new ArrayList<>();
+    public List<RmResource> createResourcesStage1(RallyObject parent) {
+        List<RmResource> result = new ArrayList<>();
         result.add(createResource("/assets/images/nube.png", 150, 15, 1, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/nube.png", 250, 150, 2, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/nube.png", 550, 150, 3, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/nube.png", 600, 150, 1, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/sol.png", 600, 150, 1, 200, 200, "animate-left-right", parent));
-        result.add(createResource("/assets/images/montanas.png", 600, 150, 1, 1280, 300, "animate-top-down", parent));
+        result.add(createResource("/assets/images/montanas.png", 0, 350, 1, 1280, 300, "animate-top-down", parent));
         return result;
     }
-    
-    public List<AnimatedResource> createResourcesStage2(RallyObject parent) {
-        List<AnimatedResource> result = new ArrayList<>();
+
+    public List<RmResource> createResourcesStage2(RallyObject parent) {
+        List<RmResource> result = new ArrayList<>();
         result.add(createResource("/assets/images/nube.png", 150, 15, 1, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/nube.png", 250, 150, 2, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/nube.png", 550, 150, 3, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/nube.png", 600, 150, 1, 150, 100, "animate-top-down", parent));
         result.add(createResource("/assets/images/luna.png", 600, 150, 1, 200, 200, "animate-left-right", parent));
-        result.add(createResource("/assets/images/edificios.png", 600, 150, 1, 1280, 300, "animate-top-down", parent));
+        result.add(createResource("/assets/images/edificios.png", 0, 350, 1, 1280, 300, "animate-top-down", parent));
         return result;
     }
 
-    public AnimatedResource createResource(String url, Integer posx, Integer posy, Integer posz, Integer width, Integer height, String animation, RallyObject parent) {
-        AnimatedResource animatedResource = new AnimatedResource();
+    public RmResource createResource(String url, Integer posx, Integer posy, Integer posz, Integer width, Integer height, String animation, RallyObject parent) {
+        RmResource animatedResource = new RmResource();
         animatedResource.setAnimation(animation);
         animatedResource.setDownloadUrl(url);
         animatedResource.setPosx(posx);
@@ -172,6 +203,26 @@ public class CatalogEndpoint {
         animatedResource.setHeight(height);
         animatedResource.setParent(parent);
         return animatedResource;
+    }
+
+    public String replaceCountry(String text, String country) {
+        return text.replace("${country.name}", country);
+    }
+
+    public MultipleValueQuestion createMultipleValueQuestions(String question, String[] answers, Integer correctNumber, RallyCountry country) {
+        MultipleValueQuestion result = new MultipleValueQuestion();
+        result.setPlainText(replaceCountry(question, country.getCountry().getName()));
+        result.setPosibleAnswers(new ArrayList<MultipleValueAnswer>());
+        result.setRallyCountry(country);
+        for (int i = 0; i < answers.length; i++) {
+            MultipleValueAnswer mva = new MultipleValueAnswer();
+            mva.setText(answers[i]);
+            mva.setValue(answers[i]);
+            mva.setCorrect(i == correctNumber);
+            mva.setQuestion(result);
+            result.getPosibleAnswers().add(mva);
+        }
+        return result;
     }
 
 }

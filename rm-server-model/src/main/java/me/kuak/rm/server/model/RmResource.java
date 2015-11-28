@@ -50,6 +50,18 @@ public class RmResource implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
+    @Column(name = "posx")
+    private Integer posx;
+    @Column(name = "posy")
+    private Integer posy;
+    @Column(name = "posz")
+    private Integer posz;
+    @Column(name = "width")
+    private Integer width;
+    @Column(name = "height")
+    private Integer height;
+    @Column(name = "animation")
+    private String animation;
 
     public RmResource() {
     }
@@ -143,6 +155,54 @@ public class RmResource implements Serializable {
 
     public void setType_(String type_) {
         this.type_ = type_;
+    }
+
+    public Integer getPosx() {
+        return posx;
+    }
+
+    public void setPosx(Integer posx) {
+        this.posx = posx;
+    }
+
+    public Integer getPosy() {
+        return posy;
+    }
+
+    public void setPosy(Integer posy) {
+        this.posy = posy;
+    }
+
+    public Integer getPosz() {
+        return posz;
+    }
+
+    public void setPosz(Integer posz) {
+        this.posz = posz;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public String getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(String animation) {
+        this.animation = animation;
     }
 
 }

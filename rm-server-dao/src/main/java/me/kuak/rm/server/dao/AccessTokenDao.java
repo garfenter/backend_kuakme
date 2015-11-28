@@ -9,4 +9,6 @@ public interface AccessTokenDao {
 
     void save(AccessToken accessToken);
 
+    AccessToken findAccessTokenByCode(String accessToken);
+    
 }

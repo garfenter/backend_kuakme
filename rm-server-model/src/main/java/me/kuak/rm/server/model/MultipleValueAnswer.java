@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -65,6 +66,7 @@ public class MultipleValueAnswer implements Serializable {
         this.value = value;
     }
 
+    @XmlTransient
     public MultipleValueQuestion getQuestion() {
         return question;
     }

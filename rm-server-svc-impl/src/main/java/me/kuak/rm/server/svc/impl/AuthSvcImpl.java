@@ -65,8 +65,15 @@ public class AuthSvcImpl implements AuthSvc {
         return at;
     }
 
+    @Override
+    public AccessToken findAccessTokenByCode(String tokenCode) {
+        return accessTokenDao.findAccessTokenByCode(tokenCode);
+    }
+
     public final class SessionTokenGenerator {
+
         private SecureRandom random = new SecureRandom();
+
         public String generateSessionToken() {
             return new BigInteger(130, random).toString(32);
         }
