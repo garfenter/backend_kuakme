@@ -1,11 +1,13 @@
 package me.kuak.rm.server.web.rs.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  * @param <T>
  */
-public class RsResponse<T> {
+public class RsResponse<T extends Serializable> implements Serializable {
 
     public static final int CODE_OK = 0;
     public static final int CODE_SERVICE_ERROR = 100;
