@@ -10,7 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.svc.GroupSvc;
-import me.kuak.rm.server.web.rs.model.RsResponse;
 
 /**
  *

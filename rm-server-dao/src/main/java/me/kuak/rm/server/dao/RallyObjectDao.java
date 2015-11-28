@@ -9,5 +9,7 @@ import me.kuak.rm.server.model.RallyObject;
 public interface RallyObjectDao {
 
     void createRallyObject(RallyObject rallyObject);
+    
+    RallyObject findRallyObjectById(Integer id, Class clazz);
 
 }

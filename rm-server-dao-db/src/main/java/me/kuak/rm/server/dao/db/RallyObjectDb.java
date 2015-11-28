@@ -25,4 +25,9 @@ public class RallyObjectDb implements RallyObjectDao {
         entityManager.persist(rallyObject);
     }
 
+    @Override
+    public RallyObject findRallyObjectById(Integer id, Class clazz) {
+        return (RallyObject) entityManager.find(clazz, id);
+    }
+
 }

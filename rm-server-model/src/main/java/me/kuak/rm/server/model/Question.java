@@ -11,6 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,9 +34,13 @@ public class Question extends RallyObject implements Serializable {
     private String type;
     @Column(name = "input_type")
     private String inputType;
+    @Column(name = "background")
+    private String background;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rally_country")
     private RallyCountry rallyCountry;
+    @Column(name = "position")
+    private Integer position;
 
     public Integer getMaxScore() {
         return maxScore;
@@ -77,12 +82,29 @@ public class Question extends RallyObject implements Serializable {
         this.inputType = inputType;
     }
 
+    @XmlTransient
     public RallyCountry getRallyCountry() {
         return rallyCountry;
     }
 
     public void setRallyCountry(RallyCountry rallyCountry) {
         this.rallyCountry = rallyCountry;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
 }

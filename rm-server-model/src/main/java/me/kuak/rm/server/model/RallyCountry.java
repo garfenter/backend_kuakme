@@ -29,7 +29,7 @@ public class RallyCountry extends RallyObject implements Serializable {
     private Country country;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rallyCountry")
     private List<Question> questions;
-
+    
     public Rally getRally() {
         return rally;
     }

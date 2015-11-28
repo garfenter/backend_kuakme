@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,7 +31,6 @@ public class RmResource implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     private RallyObject parent;
@@ -44,6 +44,8 @@ public class RmResource implements Serializable {
     private String contentType;
     @Column(name = "type")
     private String type;
+    @Column(name = "type_")
+    private String type_;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
@@ -78,6 +80,7 @@ public class RmResource implements Serializable {
         this.description = description;
     }
 
+    @XmlTransient
     public RallyObject getParent() {
         return parent;
     }
@@ -132,6 +135,14 @@ public class RmResource implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getType_() {
+        return type_;
+    }
+
+    public void setType_(String type_) {
+        this.type_ = type_;
     }
 
 }

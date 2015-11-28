@@ -1,5 +1,6 @@
 package me.kuak.rm.server.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ANIMATED_RESOURCE")
 @DiscriminatorValue("animated-resource")
-public class AnimatedResource extends RmResource {
+public class AnimatedResource extends RmResource implements Serializable {
 
     @Column(name = "posx")
     private Integer posx;
@@ -26,6 +27,13 @@ public class AnimatedResource extends RmResource {
     private Integer height;
     @Column(name = "animation")
     private String animation;
+
+    public AnimatedResource() {
+    }
+
+    public AnimatedResource(String downloadUrl, String filename, String extension, String contentType, String type, String name, String description) {
+        super(downloadUrl, filename, extension, contentType, type, name, description);
+    }
 
     public Integer getPosx() {
         return posx;
