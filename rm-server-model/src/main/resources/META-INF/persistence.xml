@@ -13,6 +13,7 @@
     <class>me.kuak.rm.server.model.Rally</class>
     <class>me.kuak.rm.server.model.RallyObject</class>
     <class>me.kuak.rm.server.model.RmResource</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
       <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>

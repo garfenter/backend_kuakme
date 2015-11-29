@@ -45,7 +45,7 @@ public class FileSvcImpl implements FileSvc{
         resource.setParent(roParent);
         resource.setType(type);
         fileDao.save(resource);
-        resource.setDownloadUrl("/files/" + resource.getId());
+        resource.setDownloadUrl("/rm-server-web/rs/files/" + resource.getId());
     }
 
     @Override

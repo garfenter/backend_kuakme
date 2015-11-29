@@ -1,8 +1,8 @@
 package me.kuak.rm.server.web.rs;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,19 +10,22 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.RallyDao;
 import me.kuak.rm.server.dao.RallyObjectDao;
+import me.kuak.rm.server.dao.ResourceDao;
 import me.kuak.rm.server.model.AccessToken;
 import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.model.Question;
+import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.Registration;
+import me.kuak.rm.server.model.RmResource;
 import me.kuak.rm.server.svc.AuthSvc;
+import me.kuak.rm.server.web.rs.model.QuestionAnswerResponse;
 
 /**
  *
@@ -37,6 +40,8 @@ public class RallyEndpoint {
     RallyDao rallyDao;
     @EJB
     AuthSvc authSvc;
+    @EJB
+    ResourceDao resourceDao;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,11 +65,23 @@ public class RallyEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{rallyId}/countries/{countryId}/questions")
-    public Question addCountryToRally(@PathParam("rallyId") Integer rallyId, @PathParam("countryId") Integer countryId, Question question) {
+    public Question addQuestionToRallyCountry(@PathParam("rallyId") Integer rallyId, @PathParam("countryId") Integer countryId, Question question) {
         RallyCountry rallyCountry = rallyDao.findRallyCountry(rallyId, countryId);
         question.setRallyCountry(rallyCountry);
         rallyCountry.getQuestions().add(question);
+        rallyObjectDao.createRallyObject(question);
         return question;
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{rallyId}/countries/{countryId}/resources")
+    public RmResource addResourceToRallyCountry(@PathParam("rallyId") Integer rallyId, @PathParam("countryId") Integer countryId, RmResource resource) {
+        RallyCountry rallyCountry = rallyDao.findRallyCountry(rallyId, countryId);
+        resource.setParent(rallyCountry);
+        rallyCountry.getResources().add(resource);
+        resourceDao.createResource(resource);
+        return resource;
     }
 
     @GET
@@ -98,7 +115,7 @@ public class RallyEndpoint {
     @GET
     @Path("/{rallyId}/countries/{countryId}/questions")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Question> findRally(@PathParam("rallyId") Integer rallyId, @PathParam("countryId") Integer countryId) {
+    public List<Question> findRallyCountryQuestions(@PathParam("rallyId") Integer rallyId, @PathParam("countryId") Integer countryId) {
         return rallyDao.findQuestionsByRallyIdAndCountryId(rallyId, countryId);
     }
 
@@ -107,6 +124,26 @@ public class RallyEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public List<MultipleValueQuestion> findMultipleValueQuestions(@PathParam("rallyId") Integer rallyId, @PathParam("countryId") Integer countryId) {
         return rallyDao.findMultipleValueQuestionsByRallyIdAndCountryId(rallyId, countryId);
+    }
+
+    @POST
+    @Path("/questions/{id}/answers")
+    @Produces(MediaType.APPLICATION_JSON)
+    public QuestionAnswerResponse addAnswer(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie) {
+        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        QuestionAnswer qa = new QuestionAnswer();
+        qa.setCreationDate(new Date());
+        qa.setGroup(accessToken.getGroup());
+        qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));
+        rallyObjectDao.createRallyObject(qa);
+        List<RallyCountry> rallyCountries = qa.getQuestion().getRallyCountry().getRally().getRallyCountries();
+        Integer nextCountry = 0;
+        for (int i = 0; i < rallyCountries.size() - 1; i++) {
+            if (rallyCountries.get(i).getId().equals(qa.getQuestion().getRallyCountry().getId())) {
+                nextCountry = i + 1;
+            }
+        }
+        return new QuestionAnswerResponse(qa, rallyCountries.get(nextCountry).getId());
     }
 
 }

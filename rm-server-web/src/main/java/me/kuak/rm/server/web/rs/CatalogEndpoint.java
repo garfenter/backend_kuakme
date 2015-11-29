@@ -69,8 +69,8 @@ public class CatalogEndpoint {
     }
 
     @PUT
-    @Path("/{type}/{id}/resouces")
-    public RmResource addResourceToObject(@PathParam("String type") String type, @PathParam("id") Integer id, RmResource resource) throws ClassNotFoundException {
+    @Path("/{type}/{id}/resources")
+    public RmResource addResourceToObject(@PathParam("type") String type, @PathParam("id") Integer id, RmResource resource) throws ClassNotFoundException {
         RallyObject object = rallyObjectDao.findRallyObjectById(id, Class.forName("me.kuak.rm.server.model." + type));
         object.getResources().add(resource);
         resource.setParent(object);
@@ -126,7 +126,7 @@ public class CatalogEndpoint {
                 rally.getRallyCountries().add(rallyCountry);
                 Question question1 = new Question();
                 question1.setCreationDate(new Date());
-                question1.setPlainText("¿Cual es el volcan mas grande de ${country.name}? Sube una foto");
+                question1.setPlainText(replaceCountry("¿Cual es el volcan mas grande de ${country.name}? Sube una foto", country.getName()));
                 question1.setInputType("file");
                 question1.setMaxScore(10);
                 question1.setStatus(StatusType.ACTIVE);
@@ -137,7 +137,7 @@ public class CatalogEndpoint {
                 rallyCountry.getQuestions().add(question1);
                 Question question2 = new Question();
                 question2.setCreationDate(new Date());
-                question2.setPlainText("¿Cuantos lagos hay en ${country.name}?");
+                question2.setPlainText(replaceCountry("¿Cuantos lagos hay en ${country.name}?", country.getName()));
                 question2.setInputType("input");
                 question2.setMaxScore(10);
                 question2.setStatus(StatusType.ACTIVE);
@@ -148,7 +148,7 @@ public class CatalogEndpoint {
                 rallyCountry.getQuestions().add(question2);
                 Question question3 = new Question();
                 question3.setCreationDate(new Date());
-                question3.setPlainText("¿Cual es el ave nacional de ${country.name}? Envia una foto");
+                question3.setPlainText(replaceCountry("¿Cual es el ave nacional de ${country.name}? Envia una foto", country.getName()));
                 question3.setInputType("input");
                 question3.setMaxScore(10);
                 question3.setStatus(StatusType.ACTIVE);
