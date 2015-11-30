@@ -9,6 +9,7 @@ import org.apache.commons.fileupload.FileItem;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.File;
+import java.util.Date;
 
 /**
  * Created by guyo on 11/28/15.
@@ -40,6 +41,7 @@ public class FileSvcImpl implements FileSvc{
     private void saveInDB(String name, Integer parent, String type) {
         RmResource resource = new RmResource();
         RallyObject roParent = new RallyObject();
+        roParent.setCreationDate(new Date());
         roParent.setId(parent);
         resource.setFilename(name);
         resource.setParent(roParent);

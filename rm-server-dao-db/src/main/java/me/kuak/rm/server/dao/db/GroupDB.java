@@ -28,4 +28,11 @@ public class GroupDB implements GroupDao{
         }
         return null;
     }
+    
+    @Override
+    public List<Group> findAll() {
+        TypedQuery<Group> query = entityManager.createQuery("select g from Group g", Group.class);
+        return query.getResultList();
+    }
+    
 }
