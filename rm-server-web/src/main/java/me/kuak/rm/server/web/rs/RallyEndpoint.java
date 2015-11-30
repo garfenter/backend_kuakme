@@ -129,9 +129,9 @@ public class RallyEndpoint {
     @POST
     @Path("/questions/{id}/answers")
     @Produces(MediaType.APPLICATION_JSON)
-    public QuestionAnswerResponse addAnswer(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie) {
+    public QuestionAnswerResponse addAnswer(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, QuestionAnswer answer) {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
-        QuestionAnswer qa = new QuestionAnswer();
+        QuestionAnswer qa = answer;
         qa.setCreationDate(new Date());
         qa.setGroup(accessToken.getGroup());
         qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));

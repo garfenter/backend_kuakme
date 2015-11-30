@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -48,7 +49,8 @@ public class CatalogEndpoint {
 
     @PUT
     @Path("/countries")
-    @Produces
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Country createCountry(Country country) {
         rallyObjectDao.createRallyObject(country);
         return country;
@@ -63,6 +65,8 @@ public class CatalogEndpoint {
 
     @PUT
     @Path("/assets/{type}s")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public RmResource addResource(@PathParam("type") String type, RmResource resource) {
         resource.setType(type);
         return resourceDao.createResource(resource);
@@ -70,9 +74,31 @@ public class CatalogEndpoint {
 
     @PUT
     @Path("/{type}/{id}/resources")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public RmResource addResourceToObject(@PathParam("type") String type, @PathParam("id") Integer id, RmResource resource) throws ClassNotFoundException {
         RallyObject object = rallyObjectDao.findRallyObjectById(id, Class.forName("me.kuak.rm.server.model." + type));
         object.getResources().add(resource);
+        resource.setParent(object);
+        resourceDao.createResource(resource);
+        return resource;
+    }
+    
+    
+    @GET
+    @Path("/generics/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RallyObject findGenericObject(@PathParam("id") Integer id) {
+        RallyObject object = rallyObjectDao.findRallyObjectById(id, RallyObject.class);
+        return object;
+    }
+    
+    @PUT
+    @Path("/generics/{id}/resources")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public RmResource addResourceToGenericObject(@PathParam("id") Integer id, RmResource resource) {
+        RallyObject object = rallyObjectDao.findRallyObjectById(id, RallyObject.class);
         resource.setParent(object);
         resourceDao.createResource(resource);
         return resource;

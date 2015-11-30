@@ -27,7 +27,25 @@ public class ResourceDb implements ResourceDao {
 
     @Override
     public RmResource createResource(RmResource resource) {
-        entityManager.persist(resource);
+        if (resource.getId() != null) {
+            RmResource prev = entityManager.find(RmResource.class, resource.getId());
+            prev.setAnimation(resource.getAnimation());
+            prev.setContentType(resource.getContentType());
+            prev.setDescription(resource.getDescription());
+            prev.setDownloadUrl(resource.getDownloadUrl());
+            prev.setExtension(resource.getExtension());
+            prev.setFilename(resource.getFilename());
+            prev.setHeight(resource.getHeight());
+            prev.setWidth(resource.getWidth());
+            prev.setName(resource.getName());
+            prev.setPosx(resource.getPosx());
+            prev.setPosy(resource.getPosy());
+            prev.setPosz(resource.getPosz());
+            prev.setType(resource.getType());
+            prev.setType_(resource.getType_());
+        } else {
+            entityManager.persist(resource);
+        }
         return resource;
     }
 
