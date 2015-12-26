@@ -17,5 +17,7 @@ public interface GroupSvc {
     public Person addGroupMember(Person person);
 
     public List<Person> findGroupMembersByGroupId(Integer groupId);
+    
+    public List<Group> findAll();
 
 }

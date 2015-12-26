@@ -20,7 +20,7 @@ public interface RallyDao {
     
     public List<Rally> findActiveRallies();
     
-    public List<Country> findCountriesByRally(Integer rallyId);
+    public List<RallyCountry> findCountriesByRally(Integer rallyId);
     
     public Registration register(Integer rallyId, Integer groupId);  
     

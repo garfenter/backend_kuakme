@@ -43,8 +43,8 @@ public class RallyDb implements RallyDao {
     }
 
     @Override
-    public List<Country> findCountriesByRally(Integer rallyId) {
-        TypedQuery<Country> qry = entityManager.createQuery("SELECT rc.country FROM RallyCountry rc WHERE rc.rally.id = :rallyId", Country.class);
+    public List<RallyCountry> findCountriesByRally(Integer rallyId) {
+        TypedQuery<RallyCountry> qry = entityManager.createQuery("SELECT rc FROM RallyCountry rc WHERE rc.rally.id = :rallyId", RallyCountry.class);
         qry.setParameter("rallyId", rallyId);
         return qry.getResultList();
     }

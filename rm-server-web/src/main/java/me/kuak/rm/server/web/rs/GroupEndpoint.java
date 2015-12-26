@@ -1,5 +1,6 @@
 package me.kuak.rm.server.web.rs;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -34,6 +35,12 @@ public class GroupEndpoint {
     @Produces(MediaType.TEXT_PLAIN)
     public String test() {
         return "OK";
+    }
+    
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public List<Group> get() {
+        return groupSvc.findAll();
     }
 
 }

@@ -108,7 +108,7 @@ public class RallyEndpoint {
     @GET
     @Path("/{rallyId}/countries/")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Country> findCountries(@PathParam("rallyId") Integer rallyId) {
+    public List<RallyCountry> findCountries(@PathParam("rallyId") Integer rallyId) {
         return rallyDao.findCountriesByRally(rallyId);
     }
 
