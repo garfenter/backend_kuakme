@@ -22,7 +22,7 @@ public class RallyObjectDb implements RallyObjectDao {
     public void createRallyObject(RallyObject rallyObject) {
         rallyObject.setStatus(StatusType.ACTIVE);
         rallyObject.setCreationDate(new Date());
-        entityManager.persist(rallyObject);
+        entityManager.merge(rallyObject);
     }
 
     @Override

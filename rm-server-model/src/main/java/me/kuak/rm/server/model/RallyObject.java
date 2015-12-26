@@ -3,6 +3,7 @@ package me.kuak.rm.server.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -103,6 +104,25 @@ public class RallyObject implements Serializable {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RallyObject other = (RallyObject) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }
