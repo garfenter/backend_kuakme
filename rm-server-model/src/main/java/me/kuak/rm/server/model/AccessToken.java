@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "ACCESS_TOKEN")
+@Table(name = "access_token")
 public class AccessToken implements Serializable {
 
     @Id

@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "RALLY_COUNTRY")
+@Table(name = "rally_country")
 public class RallyCountry extends RallyObject implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)

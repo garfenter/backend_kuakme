@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "RALLY_OBJECT")
+@Table(name = "rally_object")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
 @DiscriminatorValue("base")

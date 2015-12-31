@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "GROUP_")
+@Table(name = "group_")
 @DiscriminatorValue("group")
 @NamedQueries(
         @NamedQuery(name="Group.findByUser", query="select g from Group g where g.user = :user")

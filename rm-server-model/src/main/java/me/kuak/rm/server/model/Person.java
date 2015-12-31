@@ -16,7 +16,7 @@ import javax.persistence.Temporal;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "PERSON")
+@Table(name = "person")
 @DiscriminatorValue("person")
 public class Person extends RallyObject implements Serializable {
 

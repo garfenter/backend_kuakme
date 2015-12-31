@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-@Table(name = "REGISTRATION")
+@Table(name = "registration")
 @Entity
 public class Registration implements Serializable {
 

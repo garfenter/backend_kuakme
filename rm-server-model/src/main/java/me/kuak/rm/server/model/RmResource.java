@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-@Table(name = "RESOURCE")
+@Table(name = "resource")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type_")

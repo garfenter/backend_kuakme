@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "RALLY")
+@Table(name = "rally")
 @DiscriminatorValue("rally")
 public class Rally extends RallyObject implements Serializable {
 

@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Entity
-@Table(name = "QUESTION")
+@Table(name = "question")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "TYPE")
 @DiscriminatorValue("question")
