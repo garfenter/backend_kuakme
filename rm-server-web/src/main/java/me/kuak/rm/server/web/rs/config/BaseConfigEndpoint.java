@@ -39,6 +39,4 @@ public interface BaseConfigEndpoint<T> {
      */
     void delete(Integer id);
     
-    
-
 }

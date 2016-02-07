@@ -18,7 +18,7 @@ public class AdminEndpoint {
     AdminDao adminDao;
 
     @GET
-    @Path("{/name}/")
+    @Path("/{name}/")
     public EntityConfiguration findConfigurationByName(@PathParam("name") String name) {
         return adminDao.findConfigurationByEntityName(name);
     }

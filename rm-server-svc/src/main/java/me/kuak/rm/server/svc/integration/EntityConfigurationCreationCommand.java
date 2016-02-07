@@ -40,6 +40,7 @@ public class EntityConfigurationCreationCommand extends InitializationCommand {
         fields2.add(new FieldConfiguration("Configuration", "configuration", FieldType.INPUT, null, null, entityConfForField));
         fields2.add(new FieldConfiguration("Parent", "parent", FieldType.OBJECT, null, "EntityConfiguration", entityConfForField));
         getEntityManager().persist(entityConfForField);
+        complete();
     }
 
     @Override
