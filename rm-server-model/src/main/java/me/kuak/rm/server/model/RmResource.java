@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type_")
 @DiscriminatorValue("base")
-public class RmResource implements Serializable {
+public class RmResource extends RallyObject implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

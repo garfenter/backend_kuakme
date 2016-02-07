@@ -19,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
@@ -49,7 +48,7 @@ public class RallyObject implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
     private List<RmResource> resources;
-
+    
     public List<RmResource> getResources() {
         return resources;
     }

@@ -21,6 +21,8 @@ public class Group extends RallyObject implements Serializable {
     private String password;
     @Column(name = "user_")
     private String user;
+    @Column(name = "role")
+    private String role;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
     private List<Person> members;
     @Column(name = "url")
@@ -79,6 +81,14 @@ public class Group extends RallyObject implements Serializable {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+    
+    public void setRole(String role){
+        this.role = role;
+    }
+    
+    public String getRole(){
+        return role;
     }
 
 }
