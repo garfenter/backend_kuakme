@@ -4,8 +4,10 @@ import java.util.List;
 import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.model.Question;
+import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
+import me.kuak.rm.server.model.Rankin;
 import me.kuak.rm.server.model.Registration;
 
 /**
@@ -16,6 +18,10 @@ public interface RallyDao {
 
     public List<Question> findQuestionsByRallyIdAndCountryId(Integer rallyId, Integer countryId);
     
+    public List<QuestionAnswer> findAnswersByQuestionId(Integer questionId);
+    
+    public QuestionAnswer findAnswerById(Integer questionAnswerId);
+    
     public List<MultipleValueQuestion> findMultipleValueQuestionsByRallyIdAndCountryId(Integer rallyId, Integer countryId);
     
     public List<Rally> findActiveRallies();
@@ -25,5 +31,7 @@ public interface RallyDao {
     public Registration register(Integer rallyId, Integer groupId);  
     
     public RallyCountry findRallyCountry(Integer rallyId, Integer countryId);
+    
+    public List<Rankin> findRankinsByRallyId(Integer rallyId);
 }
 

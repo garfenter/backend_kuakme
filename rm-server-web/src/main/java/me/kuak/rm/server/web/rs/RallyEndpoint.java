@@ -22,6 +22,7 @@ import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
+import me.kuak.rm.server.model.Rankin;
 import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.RmResource;
 import me.kuak.rm.server.svc.AuthSvc;
@@ -144,6 +145,38 @@ public class RallyEndpoint {
             }
         }
         return new QuestionAnswerResponse(qa, rallyCountries.get(nextCountry).getId());
+    }
+
+    @GET
+    @Path("/questions/{id}/answers")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<QuestionAnswer> findQuestionAnswersByQuestionId(@PathParam("id") Integer id) {
+        return rallyDao.findAnswersByQuestionId(id);
+    }
+
+    @GET
+    @Path("/questions/{id}/answers/{answerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public QuestionAnswer findQuestionAnswerById(@PathParam("id") Integer id, @PathParam("answerId") Integer answerId) {
+        return rallyDao.findAnswerById(answerId);
+    }
+
+    @POST
+    @Path("/questions/{id}/answers/{answerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public QuestionAnswer updateAnswer(@PathParam("id") Integer id, @PathParam("answerId") Integer answerId, @CookieParam("at") Cookie cookie, QuestionAnswer answer) {
+        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        QuestionAnswer questionAnswer = findQuestionAnswerById(id, answerId);
+        questionAnswer.setPoints(answer.getPoints());
+        rallyObjectDao.updateRallyObject(questionAnswer);
+        return questionAnswer;
+    }
+
+    @GET
+    @Path("{rallyId}/ranking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Rankin> findRankinByRallyId(@PathParam("rallyId") Integer rallyId) {
+        return rallyDao.findRankinsByRallyId(rallyId);
     }
 
 }
