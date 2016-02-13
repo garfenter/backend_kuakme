@@ -9,8 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import me.kuak.rm.server.util.HalfDuplexXmlAdapter;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,12 +28,15 @@ public class RallyCountry extends RallyObject implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rallyCountry")
     private List<Question> questions;
 
-    @XmlJavaTypeAdapter(HalfDuplexXmlAdapter.class)
+    @XmlTransient
     public Rally getRally() {
         return rally;
     }
 
     public void setRally(Rally rally) {
+        if (rally != null && country != null) {
+            setName(rally.getName() + "_" + country.getName());
+        }
         this.rally = rally;
     }
 
@@ -43,6 +45,9 @@ public class RallyCountry extends RallyObject implements Serializable {
     }
 
     public void setCountry(Country country) {
+        if (rally != null && country != null) {
+            setName(rally.getName() + "_" + country.getName());
+        }
         this.country = country;
     }
 

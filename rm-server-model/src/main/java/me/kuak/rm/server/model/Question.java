@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import me.kuak.rm.server.util.HalfDuplexXmlAdapter;
+import me.kuak.rm.server.util.HalfDuplexXmlAdapterRallyCountry;
 
 /**
  *
@@ -85,7 +86,7 @@ public class Question extends RallyObject implements Serializable {
         this.inputType = inputType;
     }
 
-    @XmlJavaTypeAdapter(HalfDuplexXmlAdapter.class)
+    @XmlJavaTypeAdapter(HalfDuplexXmlAdapterRallyCountry.class)
     public RallyCountry getRallyCountry() {
         return rallyCountry;
     }

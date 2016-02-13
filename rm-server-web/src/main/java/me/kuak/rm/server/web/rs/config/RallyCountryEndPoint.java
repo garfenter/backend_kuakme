@@ -16,27 +16,26 @@ import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.RallyObject;
 import me.kuak.rm.server.model.StatusType;
+import me.kuak.rm.server.web.rs.model.RallyCountryWrapper;
 
 /**
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
 @Path("config/rally-country")
-public class RallyCountryEndPoint implements BaseConfigEndpoint<RallyCountry> {
+public class RallyCountryEndPoint {
 
     @EJB
     RallyObjectDao rallyObjectDao;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Override
-    public void create(RallyCountry t) {
-        rallyObjectDao.createRallyObject(t);
+    public void create(RallyCountryWrapper t) {
+        rallyObjectDao.createRallyObject(t.getRallyCountry());
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
     public List<RallyCountry> find(@QueryParam("position") Integer position, @QueryParam("limit") Integer limit) {
         return (List<RallyCountry>) rallyObjectDao.findRallyObjectByClass(position, limit, RallyCountry.class);
     }
@@ -44,7 +43,6 @@ public class RallyCountryEndPoint implements BaseConfigEndpoint<RallyCountry> {
     @GET
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Override
     public RallyCountry findById(@PathParam("id") Integer id) {
         return (RallyCountry) rallyObjectDao.findRallyObjectById(id, RallyCountry.class);
     }
@@ -52,7 +50,6 @@ public class RallyCountryEndPoint implements BaseConfigEndpoint<RallyCountry> {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Override
     public void update(@PathParam("id") Integer id, RallyCountry t) {
         rallyObjectDao.updateRallyObject(t);
     }
@@ -60,7 +57,6 @@ public class RallyCountryEndPoint implements BaseConfigEndpoint<RallyCountry> {
     @DELETE
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Override
     public void delete(@PathParam("id") Integer id) {
         RallyObject obj = rallyObjectDao.findRallyObjectById(id, RallyCountry.class);
         obj.setStatus(StatusType.INACTIVE);

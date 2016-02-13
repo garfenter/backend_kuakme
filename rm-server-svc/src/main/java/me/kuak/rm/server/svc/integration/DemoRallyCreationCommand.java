@@ -44,6 +44,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             Question question1 = new Question();
             question1.setCreationDate(new Date());
             question1.setPlainText(replaceCountry("¿Cual es el volcan mas grande de ${country.name}? Sube una foto", country.getName()));
+            question1.setName(question1.getPlainText());
             question1.setInputType("file");
             question1.setMaxScore(10);
             question1.setStatus(StatusType.ACTIVE);
@@ -55,6 +56,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             Question question2 = new Question();
             question2.setCreationDate(new Date());
             question2.setPlainText(replaceCountry("¿Cuantos lagos hay en ${country.name}?", country.getName()));
+            question2.setName(question1.getPlainText());
             question2.setInputType("input");
             question2.setMaxScore(10);
             question2.setStatus(StatusType.ACTIVE);
@@ -66,6 +68,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             Question question3 = new Question();
             question3.setCreationDate(new Date());
             question3.setPlainText(replaceCountry("¿Cual es el ave nacional de ${country.name}? Envia una foto", country.getName()));
+            question3.setName(question3.getPlainText());
             question3.setInputType("input");
             question3.setMaxScore(10);
             question3.setStatus(StatusType.ACTIVE);
@@ -143,6 +146,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
     public MultipleValueQuestion createMultipleValueQuestions(String question, String[] answers, Integer correctNumber, RallyCountry country) {
         MultipleValueQuestion result = new MultipleValueQuestion();
         result.setPlainText(replaceCountry(question, country.getCountry().getName()));
+        result.setName(result.getPlainText());
         result.setPosibleAnswers(new ArrayList<MultipleValueAnswer>());
         result.setRallyCountry(country);
         for (int i = 0; i < answers.length; i++) {

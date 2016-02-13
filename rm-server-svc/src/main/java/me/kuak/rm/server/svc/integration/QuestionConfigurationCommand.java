@@ -26,7 +26,15 @@ public class QuestionConfigurationCommand extends InitializationCommand {
         entityConfiguration.setDisplayName("Preguntas");
         List<FieldConfiguration> fields = new ArrayList<>();
         fields.add(new FieldConfiguration("Pregunta", "plainText", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Identificador", "name", FieldType.INPUT, null, null, entityConfiguration));
         fields.add(new FieldConfiguration("Recursos", "resources", FieldType.OBJECT_ARRAY, null, "Resource", entityConfiguration));
+        fields.add(new FieldConfiguration("Pais rally", "rallyCountry", FieldType.OBJECT, null, "RallyCountry", "name",entityConfiguration));
+        fields.add(new FieldConfiguration("Tipo ingreso", "inputType", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Punteo maximo", "maxScore", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Estado", "Status", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Posicion", "position", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Background", "background", FieldType.INPUT, null, null, entityConfiguration));
+        
         entityConfiguration.setFields(fields);
         getEntityManager().persist(entityConfiguration);
         complete();
