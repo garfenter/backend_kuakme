@@ -4,10 +4,12 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.ValidationException;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 import me.kuak.rm.server.model.AccessToken;
 import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.svc.QuestionSvc;
@@ -24,6 +26,8 @@ public class AuthEndpoint {
     AuthSvc authSvc;
     @EJB
     QuestionSvc questionSvc;
+    @Context
+    UriInfo uri;
 
     @POST
     @Path("authenticate")
@@ -31,7 +35,8 @@ public class AuthEndpoint {
     public Response authenticate(@FormParam("user") String user, @FormParam("password") String password) {
         try {
             AccessToken token = authSvc.authenticate(user, password);
-            return Response.ok().cookie(new NewCookie("at", token.getToken())).build();
+            NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
+            return Response.ok().cookie(cookie).build();
         } catch (ValidationException v) {
             return Response.status(Status.FORBIDDEN).build();
         } catch (Throwable t) {
@@ -51,5 +56,5 @@ public class AuthEndpoint {
             return Response.status(Status.FORBIDDEN).build();
         }
     }
-    
+
 }
