@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import me.kuak.rm.server.util.HalfDuplexXmlAdapter;
 
 /**
  *
@@ -61,7 +63,7 @@ public class FieldConfiguration implements Serializable {
         this.id = id;
     }
 
-    @XmlTransient
+    @XmlJavaTypeAdapter(HalfDuplexXmlAdapter.class)
     public EntityConfiguration getParent() {
         return parent;
     }

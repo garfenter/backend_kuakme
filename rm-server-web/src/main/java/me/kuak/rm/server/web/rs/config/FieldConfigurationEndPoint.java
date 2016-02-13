@@ -1,6 +1,8 @@
 package me.kuak.rm.server.web.rs.config;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -22,6 +24,8 @@ import me.kuak.rm.server.model.admin.FieldConfiguration;
 @Path("config/field-configuration")
 public class FieldConfigurationEndPoint implements BaseConfigEndpoint<FieldConfiguration> {
 
+    private static final Logger logger = Logger.getLogger(FieldConfigurationEndPoint.class.getSimpleName());
+
     @EJB
     private AdminDao adminDao;
 
@@ -29,6 +33,7 @@ public class FieldConfigurationEndPoint implements BaseConfigEndpoint<FieldConfi
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
     public void create(FieldConfiguration t) {
+        logger.log(Level.INFO, "PARENT: {0}", t.getParent());
         adminDao.createFieldConfiguration(t);
     }
 
