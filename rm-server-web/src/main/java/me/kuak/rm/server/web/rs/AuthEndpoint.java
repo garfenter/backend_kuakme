@@ -1,5 +1,6 @@
 package me.kuak.rm.server.web.rs;
 
+import java.net.URI;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.ValidationException;
@@ -36,7 +37,7 @@ public class AuthEndpoint {
         try {
             AccessToken token = authSvc.authenticate(user, password);
             NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
-            return Response.ok().cookie(cookie).build();
+            return Response.temporaryRedirect(new URI("/rally/chooseRally.html")).cookie(cookie).build();
         } catch (ValidationException v) {
             return Response.status(Status.FORBIDDEN).build();
         } catch (Throwable t) {
