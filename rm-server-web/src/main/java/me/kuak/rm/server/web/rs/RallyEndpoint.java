@@ -127,6 +127,13 @@ public class RallyEndpoint {
         return rallyDao.findMultipleValueQuestionsByRallyIdAndCountryId(rallyId, countryId);
     }
 
+    @GET
+    @Path("/questions/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Question findQuestion(@PathParam("id")Integer id){
+        return rallyDao.findQuestionByQuestionId(id);
+    }
+            
     @POST
     @Path("/questions/{id}/answers")
     @Produces(MediaType.APPLICATION_JSON)
