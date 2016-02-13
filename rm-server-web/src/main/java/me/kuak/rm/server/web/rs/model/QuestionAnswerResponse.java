@@ -42,6 +42,9 @@ public class QuestionAnswerResponse {
         this.nextCountry = nextCountry;
     }
 
+    public QuestionAnswerResponse() {
+    }
+
     public Integer getNextCountry() {
         return nextCountry;
     }
