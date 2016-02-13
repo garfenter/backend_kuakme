@@ -26,7 +26,7 @@ public class AccessTokenDB implements AccessTokenDao {
     @Override
     public AccessToken findAccessTokenByCode(String tokenCode) {
         TypedQuery<AccessToken> qry = entityManager.createQuery("SELECT a FROM AccessToken a where A.token =:tokenCode", AccessToken.class);
-        qry.setParameter("tokenCoe", tokenCode);
+        qry.setParameter("tokenCode", tokenCode);
         List<AccessToken> tokens = qry.getResultList();
         return tokens.isEmpty() ? null : tokens.get(0);
     }
