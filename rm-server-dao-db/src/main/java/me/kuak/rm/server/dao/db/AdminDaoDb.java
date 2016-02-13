@@ -1,6 +1,7 @@
 package me.kuak.rm.server.dao.db;
 
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,6 +13,7 @@ import me.kuak.rm.server.model.admin.FieldConfiguration;
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
+@Stateless
 public class AdminDaoDb implements AdminDao {
 
     @PersistenceContext
@@ -29,7 +31,7 @@ public class AdminDaoDb implements AdminDao {
 
     @Override
     public List<EntityConfiguration> findEntitiesConfiguration(Integer position, Integer limit) {
-        TypedQuery<EntityConfiguration> qry = em.createQuery("SELECT f FROM EntityConfiguration f", EntityConfiguration.class);
+        TypedQuery<EntityConfiguration> qry = em.createQuery("SELECT f FROM EntityConfiguration f WHERE f.visible = true", EntityConfiguration.class);
         qry.setFirstResult(position);
         qry.setMaxResults(limit);
         return qry.getResultList();

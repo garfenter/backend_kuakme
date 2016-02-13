@@ -29,6 +29,10 @@ public class EntityConfiguration implements Serializable {
     private String entityName;
     @Column(name = "resourceName")
     private String resourceName;
+    @Column(name = "displayName")
+    private String displayName;
+    @Column(name = "visible")
+    private Boolean visible;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
     private List<FieldConfiguration> fields;
 
@@ -62,6 +66,22 @@ public class EntityConfiguration implements Serializable {
 
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public Boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     @Override

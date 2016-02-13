@@ -22,15 +22,20 @@ public class EntityConfigurationCreationCommand extends InitializationCommand {
         EntityConfiguration entityConfiguration = new EntityConfiguration();
         entityConfiguration.setEntityName("EntityConfiguration");
         entityConfiguration.setResourceName("entity-configuration");
+        entityConfiguration.setVisible(Boolean.TRUE);
+        entityConfiguration.setDisplayName("Configuracion de entidades");
         List<FieldConfiguration> fields = new ArrayList<>();
         fields.add(new FieldConfiguration("Entity name", "entityName", FieldType.INPUT, null, null, entityConfiguration));
         fields.add(new FieldConfiguration("Resource name", "resourceName", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Visibility", "visible", FieldType.INPUT, null, null, entityConfiguration));
+        fields.add(new FieldConfiguration("Display name", "displayName", FieldType.INPUT, null, null, entityConfiguration));
         fields.add(new FieldConfiguration("Fields", "fields", FieldType.OBJECT_ARRAY, null, "FieldConfiguration", entityConfiguration));
         entityConfiguration.setFields(fields);
         getEntityManager().persist(entityConfiguration);
         EntityConfiguration entityConfForField = new EntityConfiguration();
         entityConfForField.setEntityName("FieldConfiguration");
         entityConfForField.setResourceName("field-configuration");
+        entityConfForField.setVisible(Boolean.FALSE);
         List<FieldConfiguration> fields2 = new ArrayList();
         entityConfForField.setFields(fields2);
         fields2.add(new FieldConfiguration("Display name", "displayName", FieldType.INPUT, null, null, entityConfForField));
@@ -39,6 +44,7 @@ public class EntityConfigurationCreationCommand extends InitializationCommand {
         fields2.add(new FieldConfiguration("Default value", "defaultValue", FieldType.INPUT, null, null, entityConfForField));
         fields2.add(new FieldConfiguration("Configuration", "configuration", FieldType.INPUT, null, null, entityConfForField));
         fields2.add(new FieldConfiguration("Parent", "parent", FieldType.OBJECT, null, "EntityConfiguration", entityConfForField));
+        fields2.add(new FieldConfiguration("Field configuration", "fieldConfiguration", FieldType.OBJECT, null, "EntityConfiguration", entityConfForField));
         getEntityManager().persist(entityConfForField);
         complete();
     }

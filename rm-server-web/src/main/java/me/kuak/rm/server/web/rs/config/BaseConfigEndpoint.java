@@ -26,6 +26,13 @@ public interface BaseConfigEndpoint<T> {
     List<T> find(Integer position, Integer limit);
 
     /**
+     * returns an Entity by its Id
+     * @param id
+     * @return
+     */
+    T findById(Integer id);
+
+    /**
      * Updates the entity T
      *
      * @param id
@@ -35,8 +42,9 @@ public interface BaseConfigEndpoint<T> {
 
     /**
      * Deletes the entity T
+     *
      * @param id
      */
     void delete(Integer id);
-    
+
 }

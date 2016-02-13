@@ -36,7 +36,7 @@ public class EntityConfigurationEndpoint implements BaseConfigEndpoint<EntityCon
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public List<EntityConfiguration> find(@QueryParam("position") Integer position, @QueryParam("limit") Integer limit) {
-        return (List<EntityConfiguration>) adminDao.findEntitiesConfiguration(position, limit);
+        return adminDao.findEntitiesConfiguration(position, limit);
     }
 
     @PUT
@@ -51,8 +51,22 @@ public class EntityConfigurationEndpoint implements BaseConfigEndpoint<EntityCon
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public void delete(Integer id) {
+    public void delete(@PathParam("id") Integer id) {
         adminDao.deleteEntityConfiguration(id);
     }
 
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Override
+    public EntityConfiguration findById(@PathParam("id") Integer id) {
+        return adminDao.findEntityConfigurationById(id);
+    }
+
+    @GET
+    @Path("/name/{name}/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public EntityConfiguration findByName(@PathParam("name") String name) {
+        return adminDao.findConfigurationByEntityName(name);
+    }
 }

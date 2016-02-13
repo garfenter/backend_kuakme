@@ -53,10 +53,18 @@ public class CountryEndpoint implements BaseConfigEndpoint<Country> {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public void delete(Integer id) {
+    public void delete(@PathParam("id") Integer id) {
         RallyObject obj = rallyObjectDao.findRallyObjectById(id, Country.class);
         obj.setStatus(StatusType.INACTIVE);
         rallyObjectDao.updateRallyObject(obj);
+    }
+
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Override
+    public Country findById(@PathParam("id") Integer id) {
+        return (Country) rallyObjectDao.findRallyObjectById(id, Country.class);
     }
 
 }

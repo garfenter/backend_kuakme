@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -60,6 +61,7 @@ public class FieldConfiguration implements Serializable {
         this.id = id;
     }
 
+    @XmlTransient
     public EntityConfiguration getParent() {
         return parent;
     }
