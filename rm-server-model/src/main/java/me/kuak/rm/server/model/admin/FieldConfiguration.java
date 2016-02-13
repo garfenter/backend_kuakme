@@ -39,6 +39,8 @@ public class FieldConfiguration implements Serializable {
     private String type_;
     @Column(name = "configuration")
     private String configuration;
+    @Column(name = "lookupName")
+    private String lookupName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     private EntityConfiguration parent;
@@ -52,6 +54,16 @@ public class FieldConfiguration implements Serializable {
         this.fieldType = fieldType;
         this.defaultValue = defaultValue;
         this.configuration = configuration;
+        this.parent = parent;
+    }
+
+    public FieldConfiguration(String displayName, String fieldName, FieldType fieldType, String defaultValue, String configuration, String lookupName, EntityConfiguration parent) {
+        this.displayName = displayName;
+        this.fieldName = fieldName;
+        this.fieldType = fieldType;
+        this.defaultValue = defaultValue;
+        this.configuration = configuration;
+        this.lookupName = lookupName;
         this.parent = parent;
     }
 
@@ -140,6 +152,14 @@ public class FieldConfiguration implements Serializable {
 
     public void setConfiguration(String configuration) {
         this.configuration = configuration;
+    }
+
+    public String getLookupName() {
+        return lookupName;
+    }
+
+    public void setLookupName(String lookupName) {
+        this.lookupName = lookupName;
     }
 
 }

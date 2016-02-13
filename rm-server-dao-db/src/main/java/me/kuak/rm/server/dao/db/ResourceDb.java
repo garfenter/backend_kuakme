@@ -49,4 +49,27 @@ public class ResourceDb implements ResourceDao {
         return resource;
     }
 
+    @Override
+    public void createResourceObject(RmResource resource) {
+        entityManager.merge(resource);
+    }
+
+    @Override
+    public RmResource findResourceById(Integer id, Class clazz) {
+        return entityManager.find(RmResource.class, id);
+    }
+
+    @Override
+    public List<RmResource> findResources(Integer position, Integer limit) {
+        TypedQuery<RmResource> qry = entityManager.createQuery("SELECT r FROM RmResource r", RmResource.class);
+        qry.setMaxResults(limit);
+        qry.setFirstResult(position);
+        return qry.getResultList();
+    }
+
+    @Override
+    public void updateResource(RmResource rmResource) {
+        entityManager.merge(rmResource);
+    }
+
 }

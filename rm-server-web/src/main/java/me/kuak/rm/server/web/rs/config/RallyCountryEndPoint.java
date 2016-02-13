@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.RallyObjectDao;
-import me.kuak.rm.server.model.Question;
+import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.RallyObject;
 import me.kuak.rm.server.model.StatusType;
 
@@ -21,8 +21,8 @@ import me.kuak.rm.server.model.StatusType;
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-@Path("config/question")
-public class QuestionEndPoint implements BaseConfigEndpoint<Question> {
+@Path("config/rally-country")
+public class RallyCountryEndPoint implements BaseConfigEndpoint<RallyCountry> {
 
     @EJB
     RallyObjectDao rallyObjectDao;
@@ -30,23 +30,30 @@ public class QuestionEndPoint implements BaseConfigEndpoint<Question> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public void create(Question t) {
+    public void create(RallyCountry t) {
         rallyObjectDao.createRallyObject(t);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public List<Question> find(@QueryParam("position") Integer position, @QueryParam("limit") Integer limit) {
-        return (List<Question>) rallyObjectDao.findRallyObjectByClass(position, limit, Question.class);
+    public List<RallyCountry> find(@QueryParam("position") Integer position, @QueryParam("limit") Integer limit) {
+        return (List<RallyCountry>) rallyObjectDao.findRallyObjectByClass(position, limit, RallyCountry.class);
+    }
 
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Override
+    public RallyCountry findById(@PathParam("id") Integer id) {
+        return (RallyCountry) rallyObjectDao.findRallyObjectById(id, RallyCountry.class);
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public void update(@PathParam("id") Integer id, Question t) {
+    public void update(@PathParam("id") Integer id, RallyCountry t) {
         rallyObjectDao.updateRallyObject(t);
     }
 
@@ -55,16 +62,8 @@ public class QuestionEndPoint implements BaseConfigEndpoint<Question> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
     public void delete(@PathParam("id") Integer id) {
-        RallyObject obj = rallyObjectDao.findRallyObjectById(id, Question.class);
+        RallyObject obj = rallyObjectDao.findRallyObjectById(id, RallyCountry.class);
         obj.setStatus(StatusType.INACTIVE);
         rallyObjectDao.updateRallyObject(obj);
-    }
-
-    @GET
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Override
-    public Question findById(@PathParam("id") Integer id) {
-        return (Question) rallyObjectDao.findRallyObjectById(id, Question.class);
     }
 }

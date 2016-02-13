@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import me.kuak.rm.server.util.HalfDuplexXmlAdapter;
 
 /**
  *
@@ -83,11 +85,11 @@ public class Question extends RallyObject implements Serializable {
         this.inputType = inputType;
     }
 
-    @XmlTransient
+    @XmlJavaTypeAdapter(HalfDuplexXmlAdapter.class)
     public RallyCountry getRallyCountry() {
         return rallyCountry;
     }
-    
+
     public void setRallyCountry(RallyCountry rallyCountry) {
         this.rallyCountry = rallyCountry;
     }

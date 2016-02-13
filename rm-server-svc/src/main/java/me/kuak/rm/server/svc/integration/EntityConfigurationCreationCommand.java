@@ -43,8 +43,7 @@ public class EntityConfigurationCreationCommand extends InitializationCommand {
         fields2.add(new FieldConfiguration("Field Type", "fieldType", FieldType.INPUT, null, null, entityConfForField));
         fields2.add(new FieldConfiguration("Default value", "defaultValue", FieldType.INPUT, null, null, entityConfForField));
         fields2.add(new FieldConfiguration("Configuration", "configuration", FieldType.INPUT, null, null, entityConfForField));
-        fields2.add(new FieldConfiguration("Parent", "parent", FieldType.OBJECT, null, "EntityConfiguration", entityConfForField));
-        fields2.add(new FieldConfiguration("Field configuration", "fieldConfiguration", FieldType.OBJECT, null, "EntityConfiguration", entityConfForField));
+        fields2.add(new FieldConfiguration("Parent", "parent", FieldType.OBJECT, null, "EntityConfiguration", "displayName", entityConfForField));
         getEntityManager().persist(entityConfForField);
         complete();
     }

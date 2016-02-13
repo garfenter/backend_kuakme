@@ -13,7 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.RallyObjectDao;
-import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.RallyObject;
 import me.kuak.rm.server.model.StatusType;
 
@@ -21,8 +20,8 @@ import me.kuak.rm.server.model.StatusType;
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-@Path("config/question")
-public class QuestionEndPoint implements BaseConfigEndpoint<Question> {
+@Path("config/rally-object")
+public class RallyObjectEndPoint implements BaseConfigEndpoint<RallyObject> {
 
     @EJB
     RallyObjectDao rallyObjectDao;
@@ -30,23 +29,30 @@ public class QuestionEndPoint implements BaseConfigEndpoint<Question> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public void create(Question t) {
+    public void create(RallyObject t) {
         rallyObjectDao.createRallyObject(t);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public List<Question> find(@QueryParam("position") Integer position, @QueryParam("limit") Integer limit) {
-        return (List<Question>) rallyObjectDao.findRallyObjectByClass(position, limit, Question.class);
+    public List<RallyObject> find(@QueryParam("position") Integer position, @QueryParam("limit") Integer limit) {
+        return (List<RallyObject>) rallyObjectDao.findRallyObjectByClass(position, limit, RallyObject.class);
+    }
 
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Override
+    public RallyObject findById(@PathParam("id") Integer id) {
+        return (RallyObject) rallyObjectDao.findRallyObjectById(id, RallyObject.class);
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public void update(@PathParam("id") Integer id, Question t) {
+    public void update(@PathParam("id") Integer id, RallyObject t) {
         rallyObjectDao.updateRallyObject(t);
     }
 
@@ -55,16 +61,8 @@ public class QuestionEndPoint implements BaseConfigEndpoint<Question> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
     public void delete(@PathParam("id") Integer id) {
-        RallyObject obj = rallyObjectDao.findRallyObjectById(id, Question.class);
+        RallyObject obj = rallyObjectDao.findRallyObjectById(id, RallyObject.class);
         obj.setStatus(StatusType.INACTIVE);
         rallyObjectDao.updateRallyObject(obj);
-    }
-
-    @GET
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Override
-    public Question findById(@PathParam("id") Integer id) {
-        return (Question) rallyObjectDao.findRallyObjectById(id, Question.class);
     }
 }

@@ -137,14 +137,15 @@ public class RallyEndpoint {
         qa.setGroup(accessToken.getGroup());
         qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));
         rallyObjectDao.createRallyObject(qa);
-        List<RallyCountry> rallyCountries = qa.getQuestion().getRallyCountry().getRally().getRallyCountries();
-        Integer nextCountry = 0;
-        for (int i = 0; i < rallyCountries.size() - 1; i++) {
-            if (rallyCountries.get(i).getId().equals(qa.getQuestion().getRallyCountry().getId())) {
-                nextCountry = i + 1;
-            }
-        }
-        return new QuestionAnswerResponse(qa, rallyCountries.get(nextCountry).getId());
+//        List<RallyCountry> rallyCountries = qa.getQuestion().getRallyCountry().getRally().getRallyCountries();
+//        Integer nextCountry = 0;
+//        for (int i = 0; i < rallyCountries.size() - 1; i++) {
+//            if (rallyCountries.get(i).getId().equals(qa.getQuestion().getRallyCountry().getId())) {
+//                nextCountry = i + 1;
+//            }
+//        }
+//        return new QuestionAnswerResponse(qa, rallyCountries.get(nextCountry).getId());
+        return new QuestionAnswerResponse(qa);
     }
 
     @GET

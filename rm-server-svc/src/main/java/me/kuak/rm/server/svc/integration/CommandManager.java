@@ -34,6 +34,12 @@ public class CommandManager {
         result.add(new ResourcesCreationCommand(em));
         result.add(new DemoRallyCreationCommand(em));
         result.add(new EntityConfigurationCreationCommand(em));
+        result.add(new ResourceConfigurationCommand(em));
+        result.add(new RallyConfigurationCommand(em));
+        result.add(new CountryConfigurationCommand(em));
+        result.add(new RallyCountryConfigurationCommand(em));
+        result.add(new RallyObjectConfigurationCommand(em));
+        result.add(new QuestionConfigurationCommand(em));
         return result;
     }
 

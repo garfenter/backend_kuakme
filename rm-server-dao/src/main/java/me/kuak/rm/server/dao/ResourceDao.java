@@ -13,4 +13,12 @@ public interface ResourceDao {
     
     public RmResource createResource(RmResource resource);
     
+    void createResourceObject(RmResource rallyObject);
+    
+    RmResource findResourceById(Integer id, Class clazz);
+    
+    List<RmResource> findResources(Integer position, Integer limit);
+    
+    void updateResource(RmResource rallyObject);
+    
 }

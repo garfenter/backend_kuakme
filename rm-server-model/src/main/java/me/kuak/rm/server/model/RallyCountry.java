@@ -5,13 +5,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import me.kuak.rm.server.util.HalfDuplexXmlAdapter;
 
 /**
  *
@@ -29,7 +28,8 @@ public class RallyCountry extends RallyObject implements Serializable {
     private Country country;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rallyCountry")
     private List<Question> questions;
-    
+
+    @XmlJavaTypeAdapter(HalfDuplexXmlAdapter.class)
     public Rally getRally() {
         return rally;
     }

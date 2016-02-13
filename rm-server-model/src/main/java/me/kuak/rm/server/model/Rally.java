@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,7 +47,6 @@ public class Rally extends RallyObject implements Serializable {
         this.endDate = endDate;
     }
     
-    @XmlTransient
     public List<RallyCountry> getRallyCountries() {
         return rallyCountries;
     }
