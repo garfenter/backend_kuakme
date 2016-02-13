@@ -18,6 +18,8 @@ public interface RallyDao {
 
     public List<Question> findQuestionsByRallyIdAndCountryId(Integer rallyId, Integer countryId);
     
+    public Question findQuestionByQuestionId(Integer questionId);
+    
     public List<QuestionAnswer> findAnswersByQuestionId(Integer questionId);
     
     public QuestionAnswer findAnswerById(Integer questionAnswerId);

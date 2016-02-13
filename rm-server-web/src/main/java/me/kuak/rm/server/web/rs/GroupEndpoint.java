@@ -38,7 +38,7 @@ public class GroupEndpoint {
     }
     
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Group> get() {
         return groupSvc.findAll();
     }
