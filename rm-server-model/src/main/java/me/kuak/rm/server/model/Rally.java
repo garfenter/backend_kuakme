@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,6 +32,10 @@ public class Rally extends RallyObject implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rally")
     private List<RallyCountry> rallyCountries;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "level")
+    private Level level;
 
     public Date getStartDate() {
         return startDate;
@@ -53,6 +59,14 @@ public class Rally extends RallyObject implements Serializable {
 
     public void setRallyCountries(List<RallyCountry> rallyCountries) {
         this.rallyCountries = rallyCountries;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
 }

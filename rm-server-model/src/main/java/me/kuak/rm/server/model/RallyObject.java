@@ -41,7 +41,7 @@ public class RallyObject implements Serializable {
     @Column(name = "type")
     private String type;
     @Column(name = "status")
-    private StatusType status;
+    private StateType status;
     @Column(name = "creation_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -89,11 +89,11 @@ public class RallyObject implements Serializable {
         this.type = type;
     }
 
-    public StatusType getStatus() {
+    public StateType getStatus() {
         return status;
     }
 
-    public void setStatus(StatusType status) {
+    public void setStatus(StateType status) {
         this.status = status;
     }
 

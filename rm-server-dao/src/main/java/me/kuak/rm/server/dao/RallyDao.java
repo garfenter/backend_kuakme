@@ -7,7 +7,7 @@ import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
-import me.kuak.rm.server.model.Rankin;
+import me.kuak.rm.server.model.Ranking;
 import me.kuak.rm.server.model.Registration;
 
 /**
@@ -34,6 +34,6 @@ public interface RallyDao {
     
     public RallyCountry findRallyCountry(Integer rallyId, Integer countryId);
     
-    public List<Rankin> findRankinsByRallyId(Integer rallyId);
+    public List<Ranking> findRankingsByRallyId(Integer rallyId);
 }
 

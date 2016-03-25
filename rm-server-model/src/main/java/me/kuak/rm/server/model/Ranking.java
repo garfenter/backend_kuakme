@@ -3,8 +3,6 @@ package me.kuak.rm.server.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
@@ -25,9 +23,9 @@ import javax.persistence.NamedNativeQuery;
             + "WHERE \n"
             + "	rc.rally = ?rallyId\n"
             + "GROUP BY\n"
-            + "	g.id, rog.name, rog.description", name = "Rankin.findRankinsByRallyId", resultClass = Rankin.class)
+            + "	g.id, rog.name, rog.description", name = "Ranking.findRankingsByRallyId", resultClass = Ranking.class)
 })
-public class Rankin implements Serializable {
+public class Ranking implements Serializable {
 
     @Id
     @Column(name = "id")

@@ -22,7 +22,7 @@ import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
-import me.kuak.rm.server.model.Rankin;
+import me.kuak.rm.server.model.Ranking;
 import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.RmResource;
 import me.kuak.rm.server.svc.AuthSvc;
@@ -183,8 +183,8 @@ public class RallyEndpoint {
     @GET
     @Path("{rallyId}/ranking")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Rankin> findRankinByRallyId(@PathParam("rallyId") Integer rallyId) {
-        return rallyDao.findRankinsByRallyId(rallyId);
+    public List<Ranking> findRankingByRallyId(@PathParam("rallyId") Integer rallyId) {
+        return rallyDao.findRankingsByRallyId(rallyId);
     }
 
 }

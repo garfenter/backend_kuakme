@@ -13,7 +13,7 @@ import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
-import me.kuak.rm.server.model.Rankin;
+import me.kuak.rm.server.model.Ranking;
 import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.StatusType;
 
@@ -96,8 +96,8 @@ public class RallyDb implements RallyDao {
     }
 
     @Override
-    public List<Rankin> findRankinsByRallyId(Integer rallyId) {
-        TypedQuery<Rankin> qry = entityManager.createNamedQuery("Rankin.findRankinsByRallyId", Rankin.class);
+    public List<Ranking> findRankingsByRallyId(Integer rallyId) {
+        TypedQuery<Ranking> qry = entityManager.createNamedQuery("Ranking.findRankingsByRallyId", Ranking.class);
         qry.setParameter("rallyId", rallyId);
         return qry.getResultList();
     }

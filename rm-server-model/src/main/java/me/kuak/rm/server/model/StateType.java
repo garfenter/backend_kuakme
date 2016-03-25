@@ -4,8 +4,9 @@ package me.kuak.rm.server.model;
  *
  * @author Juan Luis Cano <garfenter at adstter.com>
  */
-public enum StatusType {
+public enum StateType {
     ACTIVE,
     INACTIVE,
-    DELETED
+    DELETED,
+    COMPLETED
 }

@@ -34,6 +34,14 @@ public class Group extends RallyObject implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "country")
     private Country country;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "institution")
+    private Institution institution;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "level")
+    private Level level;
 
     public String getPassword() {
         return password;
@@ -89,6 +97,22 @@ public class Group extends RallyObject implements Serializable {
     
     public String getRole(){
         return role;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
 }

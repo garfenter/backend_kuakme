@@ -7,7 +7,7 @@ import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.RmResource;
-import me.kuak.rm.server.model.StatusType;
+import me.kuak.rm.server.model.StateType;
 
 /**
  *
@@ -85,11 +85,11 @@ public class RallyCountryWrapper {
         rallyCountry.setType(type);
     }
 
-    public StatusType getStatus() {
+    public StateType getStatus() {
         return rallyCountry.getStatus();
     }
 
-    public void setStatus(StatusType status) {
+    public void setStatus(StateType status) {
         rallyCountry.setStatus(status);
     }
 

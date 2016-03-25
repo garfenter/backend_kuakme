@@ -2,7 +2,6 @@ package me.kuak.rm.server.web.rs;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -12,7 +11,6 @@ import javax.ws.rs.core.Response;
 import me.kuak.rm.server.svc.FileSvc;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 

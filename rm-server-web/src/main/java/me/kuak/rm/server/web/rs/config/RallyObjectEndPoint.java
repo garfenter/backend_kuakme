@@ -14,7 +14,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.RallyObject;
-import me.kuak.rm.server.model.StatusType;
+import me.kuak.rm.server.model.StateType;
 
 /**
  *
@@ -62,7 +62,7 @@ public class RallyObjectEndPoint implements BaseConfigEndpoint<RallyObject> {
     @Override
     public void delete(@PathParam("id") Integer id) {
         RallyObject obj = rallyObjectDao.findRallyObjectById(id, RallyObject.class);
-        obj.setStatus(StatusType.INACTIVE);
+        obj.setStatus(StateType.INACTIVE);
         rallyObjectDao.updateRallyObject(obj);
     }
 }

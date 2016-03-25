@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.RallyObject;
-import me.kuak.rm.server.model.StatusType;
+import me.kuak.rm.server.model.StateType;
 import me.kuak.rm.server.web.rs.model.RallyCountryWrapper;
 
 /**
@@ -59,7 +59,7 @@ public class RallyCountryEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     public void delete(@PathParam("id") Integer id) {
         RallyObject obj = rallyObjectDao.findRallyObjectById(id, RallyCountry.class);
-        obj.setStatus(StatusType.INACTIVE);
+        obj.setStatus(StateType.INACTIVE);
         rallyObjectDao.updateRallyObject(obj);
     }
 }
