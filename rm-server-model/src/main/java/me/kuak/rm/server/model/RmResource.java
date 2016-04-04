@@ -1,6 +1,7 @@
 package me.kuak.rm.server.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -31,7 +32,7 @@ public class RmResource implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent")
     private RallyObject parent;
     @Column(name = "download_url")

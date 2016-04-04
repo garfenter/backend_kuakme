@@ -14,7 +14,7 @@ import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.RallyObject;
 import me.kuak.rm.server.model.RmResource;
-import me.kuak.rm.server.model.StateType;
+import me.kuak.rm.server.model.StatusType;
 
 /**
  *
@@ -33,7 +33,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
         rally.setDescription("Rally de pruebas");
         rally.setName("Rally " + new GregorianCalendar().get(GregorianCalendar.YEAR));
         rally.setStartDate(new Date());
-        rally.setStatus(StateType.ACTIVE);
+        rally.setStatus(StatusType.ACTIVE);
         rally.setRallyCountries(new ArrayList<RallyCountry>());
         for (Country country : findAllCountries()) {
             RallyCountry rallyCountry = new RallyCountry();
@@ -47,7 +47,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             question1.setName(question1.getPlainText());
             question1.setInputType("file");
             question1.setMaxScore(10);
-            question1.setStatus(StateType.ACTIVE);
+            question1.setStatus(StatusType.ACTIVE);
             question1.setPosition(1);
             question1.setRallyCountry(rallyCountry);
             question1.setBackground("day");
@@ -59,7 +59,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             question2.setName(question1.getPlainText());
             question2.setInputType("input");
             question2.setMaxScore(10);
-            question2.setStatus(StateType.ACTIVE);
+            question2.setStatus(StatusType.ACTIVE);
             question2.setPosition(2);
             question2.setRallyCountry(rallyCountry);
             question2.setBackground("night");
@@ -71,7 +71,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             question3.setName(question3.getPlainText());
             question3.setInputType("input");
             question3.setMaxScore(10);
-            question3.setStatus(StateType.ACTIVE);
+            question3.setStatus(StatusType.ACTIVE);
             question3.setPosition(3);
             question3.setRallyCountry(rallyCountry);
             question3.setBackground("day");
@@ -82,7 +82,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
             rallyCountry.getQuestions().add(createMultipleValueQuestions("¿Cual es la comidia tipica de ${country.name}?", new String[]{"Pepian", "Tacos", "Viajejet", "Sancocho"}, 2, rallyCountry));
             rallyCountry.getQuestions().add(createMultipleValueQuestions("¿Cual es el volcan mas alto de ${country.name}?", new String[]{"Tajumulco", "Popocatepe", "Citlaltépetl", "Barú"}, 2, rallyCountry));
         }
-        rally.setStatus(StateType.ACTIVE);
+        rally.setStatus(StatusType.ACTIVE);
         rally.setCreationDate(new Date());
         getEntityManager().persist(rally);
         complete();
@@ -100,7 +100,7 @@ public class DemoRallyCreationCommand extends InitializationCommand {
 
     private Iterable<Country> findAllCountries() {
         TypedQuery<Country> qry = getEntityManager().createQuery("SELECT c FROM Country c WHERE c.status = :status", Country.class);
-        qry.setParameter("status", StateType.ACTIVE);
+        qry.setParameter("status", StatusType.ACTIVE);
         return qry.getResultList();
     }
 

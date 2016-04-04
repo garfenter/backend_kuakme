@@ -21,6 +21,18 @@ public class Level extends RallyObject{
     @Column(name = "difficulty")
     private int difficulty;
 
+    public Level() {
+    }
+
+    public Level(int difficulty) {
+        this.difficulty = difficulty;
+    }
+    
+    public Level(String name, int difficulty){
+        this.difficulty = difficulty;
+        setName(name);
+    }
+    
     public int getDifficulty() {
         return difficulty;
     }

@@ -36,8 +36,9 @@ public class AuthEndpoint {
     public Response authenticate(@FormParam("user") String user, @FormParam("password") String password) {
         try {
             AccessToken token = authSvc.authenticate(user, password);
-            NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
-            return Response.temporaryRedirect(new URI("/rally/chooseRally.html")).cookie(cookie).build();
+            //NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
+            NewCookie cookie = new NewCookie("at", token.getToken(), "/", "jirolabs.io", "No comment", 360000, false);
+            return Response.temporaryRedirect(new URI("/#/welcome")).cookie(cookie).build();
         } catch (ValidationException v) {
             return Response.status(Status.FORBIDDEN).build();
         } catch (Throwable t) {

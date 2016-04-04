@@ -3,7 +3,7 @@ package me.kuak.rm.server.svc.integration;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import me.kuak.rm.server.model.Country;
-import me.kuak.rm.server.model.StateType;
+import me.kuak.rm.server.model.StatusType;
 
 /**
  *
@@ -26,7 +26,7 @@ public class CountryCreationCommand extends InitializationCommand {
 
     private void createCountry(Country country) {
         country.setCreationDate(new Date());
-        country.setStatus(StateType.ACTIVE);
+        country.setStatus(StatusType.ACTIVE);
         getEntityManager().persist(country);
     }
 

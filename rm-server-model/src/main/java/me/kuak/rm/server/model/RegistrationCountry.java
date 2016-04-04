@@ -33,7 +33,7 @@ public class RegistrationCountry extends RallyObject{
     private Integer index;
     
     @Column(name = "state_")
-    private StateType state;
+    private StatusType state;
 
     public Registration getRegistration() {
         return registration;
@@ -59,11 +59,11 @@ public class RegistrationCountry extends RallyObject{
         this.index = index;
     }
 
-    public StateType getState() {
+    public StatusType getState() {
         return state;
     }
 
-    public void setState(StateType state) {
+    public void setState(StatusType state) {
         this.state = state;
     }
     

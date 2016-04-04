@@ -25,6 +25,13 @@ public class Institution extends RallyObject{
     @JoinColumn(name = "country")
     private Country country;
 
+    public Institution() {
+    }
+    
+    public Institution(String name) {
+        setName(name);
+    }
+    
     public Country getCountry() {
         return country;
     }

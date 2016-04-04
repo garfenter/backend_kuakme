@@ -10,9 +10,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.CountryDao;
+import me.kuak.rm.server.dao.InstitutionDao;
+import me.kuak.rm.server.dao.LevelDao;
 import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.dao.ResourceDao;
 import me.kuak.rm.server.model.Country;
+import me.kuak.rm.server.model.Institution;
+import me.kuak.rm.server.model.Level;
 import me.kuak.rm.server.model.RallyObject;
 import me.kuak.rm.server.model.RmResource;
 
@@ -31,6 +35,12 @@ public class CatalogEndpoint {
 
     @EJB
     private ResourceDao resourceDao;
+    
+    @EJB
+    private LevelDao levelDao;
+    
+    @EJB
+    private InstitutionDao institutionDao;
 
     @GET
     @Path("/countries")
@@ -94,6 +104,20 @@ public class CatalogEndpoint {
         resource.setParent(object);
         resourceDao.createResource(resource);
         return resource;
+    }
+    
+    @GET
+    @Path("/levels")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Level> findAllLevels(){
+        return levelDao.findAllLevels();
+    }
+    
+    @GET
+    @Path("/institutions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Institution> findAllInstitutions(){
+        return institutionDao.findAllInstitutions();
     }
 
 }

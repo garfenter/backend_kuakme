@@ -4,12 +4,16 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
+import me.kuak.rm.server.model.AccessToken;
 import me.kuak.rm.server.model.Group;
+import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.svc.GroupSvc;
 
 /**
@@ -22,6 +26,9 @@ public class GroupEndpoint {
 
     @EJB
     private GroupSvc groupSvc;
+
+    @EJB
+    private AuthSvc authSvc;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -36,11 +43,23 @@ public class GroupEndpoint {
     public String test() {
         return "OK";
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Group> get() {
         return groupSvc.findAll();
+    }
+
+    @GET
+    @Path("/0/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Group findGroupById(@CookieParam("at") Cookie cookie) {
+        if(cookie != null){
+            AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+            return accessToken.getGroup();
+        }else{
+            return null;
+        }
     }
 
 }

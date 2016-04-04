@@ -40,6 +40,8 @@ public class CommandManager {
         result.add(new RallyCountryConfigurationCommand(em));
         result.add(new RallyObjectConfigurationCommand(em));
         result.add(new QuestionConfigurationCommand(em));
+        result.add(new LevelCreationCommand(em));
+        result.add(new InstitutionCreationCommand(em));
         return result;
     }
 

@@ -35,7 +35,7 @@ public class Registration implements Serializable {
     @Column(name = "registration_date")
     private Date registrationDate;
     @Column(name = "status")
-    private StateType status;
+    private StatusType status;
 
     public Rally getRally() {
         return rally;
@@ -61,11 +61,11 @@ public class Registration implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public StateType getStatus() {
+    public StatusType getStatus() {
         return status;
     }
 
-    public void setStatus(StateType status) {
+    public void setStatus(StatusType status) {
         this.status = status;
     }
 
