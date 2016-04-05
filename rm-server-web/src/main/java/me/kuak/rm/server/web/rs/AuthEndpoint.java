@@ -38,7 +38,7 @@ public class AuthEndpoint {
             AccessToken token = authSvc.authenticate(user, password);
             //NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
             NewCookie cookie = new NewCookie("at", token.getToken(), "/", "jirolabs.io", "No comment", 360000, false);
-            return Response.temporaryRedirect(new URI("/#/welcome")).cookie(cookie).build();
+            return Response.temporaryRedirect(new URI("/auth/welcome.html")).cookie(cookie).build();
         } catch (ValidationException v) {
             return Response.status(Status.FORBIDDEN).build();
         } catch (Throwable t) {

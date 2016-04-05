@@ -31,18 +31,26 @@ public class Group extends RallyObject implements Serializable {
     @Column(name = "last_login")
     private Date lastLogin;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country")
     private Country country;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "institution")
     private Institution institution;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "level")
     private Level level;
+    
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "avatar")
+    private RmResource avatar;
 
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "transport")
+    private RmResource transport;
+    
     public String getPassword() {
         return password;
     }
@@ -113,6 +121,22 @@ public class Group extends RallyObject implements Serializable {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public RmResource getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(RmResource avatar) {
+        this.avatar = avatar;
+    }
+
+    public RmResource getTransport() {
+        return transport;
+    }
+
+    public void setTransport(RmResource transport) {
+        this.transport = transport;
     }
 
 }
