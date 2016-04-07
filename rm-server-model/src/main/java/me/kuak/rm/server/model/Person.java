@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Person extends RallyObject implements Serializable {
     private String school;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_")
-    private Group group;
+    @XmlTransient private Group group;
 
     public Date getBirthdate() {
         return birthdate;

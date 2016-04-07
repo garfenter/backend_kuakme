@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @NamedQueries(
         @NamedQuery(name="Group.findByUser", query="select g from Group g where g.user = :user")
 )
+@XmlRootElement
 public class Group extends RallyObject implements Serializable {
 
     @Column(name = "password")

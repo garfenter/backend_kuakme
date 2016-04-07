@@ -49,6 +49,10 @@ public class GroupSvcImpl implements GroupSvc {
             }
             group.setPassword(sb.toString());
             rallyObjectDao.createRallyObject(group);
+            for (Person p : group.getMembers()) {
+                p.setGroup(group);
+            }
+            rallyObjectDao.updateRallyObject(group);
             return group;
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(GroupSvcImpl.class.getName()).log(Level.SEVERE, null, ex);
