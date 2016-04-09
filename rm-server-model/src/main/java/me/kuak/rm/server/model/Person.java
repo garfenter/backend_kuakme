@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  *
@@ -28,7 +29,8 @@ public class Person extends RallyObject implements Serializable {
     private String school;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_")
-    @XmlTransient private Group group;
+    @XmlInverseReference(mappedBy="person")
+    private Group group;
 
     public Date getBirthdate() {
         return birthdate;
