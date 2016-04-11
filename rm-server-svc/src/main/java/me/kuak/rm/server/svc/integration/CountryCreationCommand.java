@@ -18,9 +18,9 @@ public class CountryCreationCommand extends InitializationCommand {
     @Override
     void execute() {
         createCountry(new Country("Guatemala"));
-        createCountry(new Country("Brazil"));
+        createCountry(new Country("Brasil"));
         createCountry(new Country("Panama"));
-        createCountry(new Country("Mexico"));
+        createCountry(new Country("Peru"));
         complete();
     }
 

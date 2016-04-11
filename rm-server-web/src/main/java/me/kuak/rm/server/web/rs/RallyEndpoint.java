@@ -3,6 +3,7 @@ package me.kuak.rm.server.web.rs;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,6 +28,7 @@ import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.RmResource;
 import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.web.rs.model.QuestionAnswerResponse;
+import me.kuak.rm.server.web.rs.model.RegistrationInfo;
 
 /**
  *
@@ -95,9 +97,10 @@ public class RallyEndpoint {
     @POST
     @Path("/{id}/register")
     @Produces(MediaType.APPLICATION_JSON)
-    public Registration register(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Registration register(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, RegistrationInfo registrationInfo) {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
-        return rallyDao.register(id, accessToken.getGroup().getId());
+        return rallyDao.register(id, accessToken.getGroup().getId(), registrationInfo.getSelectedCountries());
     }
 
     @GET

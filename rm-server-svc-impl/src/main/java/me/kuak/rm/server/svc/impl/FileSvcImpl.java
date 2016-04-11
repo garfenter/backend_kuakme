@@ -23,10 +23,10 @@ public class FileSvcImpl implements FileSvc{
     private static final String MAINDIR = "/var/rm/files/";
 
     @Override
-    public void uploadFile(FileItem file, Integer parent, String type) throws Exception {
+    public RmResource uploadFile(FileItem file, Integer parent, String type) throws Exception {
         File dir = new File(MAINDIR + parent.toString());
         if (!dir.exists()) {
-            if (!dir.mkdir()) {
+            if (!dir.mkdirs()) {
                 throw new Exception("Directory can not be created");
             }
         }
@@ -35,10 +35,10 @@ public class FileSvcImpl implements FileSvc{
             newFile = File.createTempFile("REP_", file.getName(), dir);
         }
         file.write(newFile);
-        saveInDB(newFile.getName(), parent, type);
+        return saveInDB(newFile.getName(), parent, type);
     }
 
-    private void saveInDB(String name, Integer parent, String type) {
+    private RmResource saveInDB(String name, Integer parent, String type) {
         RmResource resource = new RmResource();
         RallyObject roParent = new RallyObject();
         roParent.setCreationDate(new Date());
@@ -48,6 +48,7 @@ public class FileSvcImpl implements FileSvc{
         resource.setType(type);
         fileDao.save(resource);
         resource.setDownloadUrl("/rm-server-web/rs/files/" + resource.getId());
+        return resource;
     }
 
     @Override

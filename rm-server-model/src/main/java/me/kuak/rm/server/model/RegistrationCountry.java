@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -19,22 +20,23 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "registration_country")
-public class RegistrationCountry extends RallyObject{
-    
+public class RegistrationCountry extends RallyObject {
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "registration")
     private Registration registration;
-    
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "country")
     private Country country;
-    
+
     @Column(name = "index_")
     private Integer index;
-    
+
     @Column(name = "state_")
     private StatusType state;
 
+    @XmlTransient
     public Registration getRegistration() {
         return registration;
     }
@@ -66,5 +68,5 @@ public class RegistrationCountry extends RallyObject{
     public void setState(StatusType state) {
         this.state = state;
     }
-    
+
 }

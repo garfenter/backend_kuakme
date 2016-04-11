@@ -2,6 +2,8 @@ package me.kuak.rm.server.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -36,6 +39,8 @@ public class Registration implements Serializable {
     private Date registrationDate;
     @Column(name = "status")
     private StatusType status;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "registration")
+    private List<RegistrationCountry> registrationCountries;
 
     public Rally getRally() {
         return rally;
@@ -75,6 +80,14 @@ public class Registration implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<RegistrationCountry> getRegistrationCountries() {
+        return registrationCountries;
+    }
+
+    public void setRegistrationCountries(List<RegistrationCountry> registrationCountries) {
+        this.registrationCountries = registrationCountries;
     }
 
 }

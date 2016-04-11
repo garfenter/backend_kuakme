@@ -18,7 +18,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import me.kuak.rm.server.model.RmResource;
+import me.kuak.rm.server.web.rs.model.FileUploadResponse;
+import me.kuak.rm.server.web.rs.model.UploadedFile;
 
 /**
  *
@@ -33,37 +35,36 @@ public class FileEndpoint {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@Context HttpServletRequest request) {
+    @Path("/{type}/{parent}")
+    public FileUploadResponse uploadFile(@PathParam("type") String type, @PathParam("parent") Integer parent, @Context HttpServletRequest request) {
         FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
-        String type = null;
-        Integer parent = null;
         List<FileItem> files = new ArrayList<>();
         try {
             List items = upload.parseRequest(request);
             Iterator<FileItem> iterator = items.iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 FileItem item = iterator.next();
-                if (item.getFieldName().equals("parent")) {
-                    parent = Integer.valueOf(item.getString());
-                } else if (item.getFieldName().equals("type")) {
-                    type = item.getString();
-                } else if (item.getFieldName().equals("file")) {
-                    files.add(item);
+                switch (item.getFieldName()) {
+                    case "file":
+                        files.add(item);
+                        break;
+                    default:
+                        break;
                 }
             }
+            FileUploadResponse result = new FileUploadResponse(new ArrayList<UploadedFile>());
             if (parent != null && type != null && files.size() > 0) {
                 for (FileItem file : files) {
-                    fileSvc.uploadFile(file, parent, type);
+                    RmResource resource = fileSvc.uploadFile(file, parent, type);
+                    result.getFiles().add(new UploadedFile(file.getFieldName(), file.getSize(), resource.getDownloadUrl(), resource.getDownloadUrl(), resource.getDownloadUrl(), resource.getDownloadUrl()));
                 }
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+            } 
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return new FileUploadResponse(new ArrayList<UploadedFile>());
         }
-        return Response.ok().build();
     }
 
     @GET
@@ -74,7 +75,21 @@ public class FileEndpoint {
 
         if (file != null && file.exists()) {
             return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
-                    .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" ) //optional
+                    .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"") //optional
+                    .build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Path("{id}")
+    public Response deleteFile(@PathParam("id") Integer id) {
+        File file = fileSvc.downloadFile(id);
+
+        if (file != null && file.exists()) {
+            return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"") //optional
                     .build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
