@@ -27,6 +27,10 @@ public class Group extends RallyObject implements Serializable {
     private String role;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
     private List<Person> members;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    private List<Registration> registrations;
+    
     @Column(name = "url")
     private String url;
     @Temporal(TemporalType.TIMESTAMP)
@@ -75,6 +79,14 @@ public class Group extends RallyObject implements Serializable {
 
     public void setMembers(List<Person> members) {
         this.members = members;
+    }
+
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
     }
 
     public String getUrl() {

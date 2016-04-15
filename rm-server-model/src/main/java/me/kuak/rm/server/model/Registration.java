@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  *
@@ -33,6 +34,7 @@ public class Registration implements Serializable {
     private Rally rally;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_")
+    @XmlInverseReference(mappedBy="person")
     private Group group;
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "registration_date")
