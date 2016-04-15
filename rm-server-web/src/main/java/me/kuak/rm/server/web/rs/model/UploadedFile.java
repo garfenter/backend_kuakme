@@ -12,17 +12,19 @@ public class UploadedFile {
     private String thumbnailUrl;
     private String deleteUrl;
     private String deleteType;
+    private Integer resourceId;
 
     public UploadedFile() {
     }
 
-    public UploadedFile(String name, Long size, String url, String thumbnailUrl, String deleteUrl, String deleteType) {
+    public UploadedFile(String name, Long size, String url, String thumbnailUrl, String deleteUrl, String deleteType, Integer resourceId) {
         this.name = name;
         this.size = size;
         this.url = url;
         this.thumbnailUrl = thumbnailUrl;
         this.deleteUrl = deleteUrl;
         this.deleteType = deleteType;
+        this.resourceId = resourceId;
     }
 
     public String getName() {
@@ -71,6 +73,14 @@ public class UploadedFile {
 
     public void setDeleteType(String deleteType) {
         this.deleteType = deleteType;
+    }
+
+    public Integer getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(Integer resourceId) {
+        this.resourceId = resourceId;
     }
 
 }

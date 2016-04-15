@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import me.kuak.rm.server.model.RallyObject;
 
 /**
  * Created by guyo on 11/28/15.
@@ -20,7 +19,6 @@ public class FileDB implements FileDao {
 
     @Override
     public RmResource save(RmResource resource) {
-        resource.setParent(entityManager.find(RallyObject.class, resource.getParent().getId()));
         entityManager.persist(resource);
         entityManager.flush();
         return resource;

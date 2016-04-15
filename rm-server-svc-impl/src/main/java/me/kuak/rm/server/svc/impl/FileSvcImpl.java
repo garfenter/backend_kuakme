@@ -10,15 +10,18 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.File;
 import java.util.Date;
+import me.kuak.rm.server.dao.RallyObjectDao;
 
 /**
  * Created by guyo on 11/28/15.
  */
 @Stateless
-public class FileSvcImpl implements FileSvc{
+public class FileSvcImpl implements FileSvc {
 
     @EJB
     private FileDao fileDao;
+    @EJB
+    private RallyObjectDao rallyObjectDao;
 
     private static final String MAINDIR = "/var/rm/files/";
 
@@ -38,13 +41,28 @@ public class FileSvcImpl implements FileSvc{
         return saveInDB(newFile.getName(), parent, type);
     }
 
+    @Override
+    public RmResource uploadFile(FileItem file, String type) throws Exception {
+        File dir = new File(MAINDIR + "tmp");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new Exception("Directory can not be created");
+            }
+        }
+        File newFile = new File(dir.getCanonicalPath() + "/" + file.getName());
+        while (!newFile.exists()) {
+            newFile = File.createTempFile("REP_", file.getName(), dir);
+        }
+        file.write(newFile);
+        return saveInDB(newFile.getName(), null, type);
+    }
+
     private RmResource saveInDB(String name, Integer parent, String type) {
         RmResource resource = new RmResource();
-        RallyObject roParent = new RallyObject();
-        roParent.setCreationDate(new Date());
-        roParent.setId(parent);
+        if (parent != null) {
+            resource.setParent(rallyObjectDao.findRallyObjectById(parent, RallyObject.class));
+        }
         resource.setFilename(name);
-        resource.setParent(roParent);
         resource.setType(type);
         fileDao.save(resource);
         resource.setDownloadUrl("/rm-server-web/rs/files/" + resource.getId());
@@ -55,13 +73,21 @@ public class FileSvcImpl implements FileSvc{
     public File downloadFile(Integer id) {
         RmResource resource = fileDao.findById(id);
         if (resource != null) {
-            File file = new File(MAINDIR + resource.getParent().getId() + "/" + resource.getFilename());
+            File file = new File(MAINDIR + (resource.getParent() == null ? "tmp" : resource.getParent().getId()) + "/" + resource.getFilename());
             System.out.println(file.getAbsolutePath());
             if (file.exists()) {
                 return file;
             }
         }
         return null;
+    }
+
+    @Override
+    public RmResource assocResourceWithParent(Integer resourceId, Integer parentId) {
+        RmResource resource = fileDao.findById(resourceId);
+        RallyObject parent = rallyObjectDao.findRallyObjectById(parentId, RallyObject.class);
+        resource.setParent(parent);
+        return resource;
     }
 
 }

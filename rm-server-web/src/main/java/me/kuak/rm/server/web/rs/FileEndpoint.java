@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import me.kuak.rm.server.model.RmResource;
 import me.kuak.rm.server.web.rs.model.FileUploadResponse;
-import me.kuak.rm.server.web.rs.model.UploadedFile;
 
 /**
  *
@@ -36,7 +35,7 @@ public class FileEndpoint {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("/{type}/{parent}")
-    public FileUploadResponse uploadFile(@PathParam("type") String type, @PathParam("parent") Integer parent, @Context HttpServletRequest request) {
+    public FileUploadResponse uploadFileWithParent(@PathParam("type") String type, @PathParam("parent") Integer parent, @Context HttpServletRequest request) {
         FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
         List<FileItem> files = new ArrayList<>();
@@ -53,18 +52,60 @@ public class FileEndpoint {
                         break;
                 }
             }
-            FileUploadResponse result = new FileUploadResponse(new ArrayList<UploadedFile>());
+            FileUploadResponse result = new FileUploadResponse(new ArrayList<RmResource>());
             if (parent != null && type != null && files.size() > 0) {
                 for (FileItem file : files) {
                     RmResource resource = fileSvc.uploadFile(file, parent, type);
-                    result.getFiles().add(new UploadedFile(file.getFieldName(), file.getSize(), resource.getDownloadUrl(), resource.getDownloadUrl(), resource.getDownloadUrl(), resource.getDownloadUrl()));
+                    result.getFiles().add(resource);
                 }
-            } 
+            }
             return result;
         } catch (Exception e) {
-            e.printStackTrace();
-            return new FileUploadResponse(new ArrayList<UploadedFile>());
+            return new FileUploadResponse(new ArrayList<RmResource>());
         }
+    }
+
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Path("/{type}")
+    public FileUploadResponse uploadFile(@PathParam("type") String type, @Context HttpServletRequest request) {
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> files = new ArrayList<>();
+        try {
+            List items = upload.parseRequest(request);
+            Iterator<FileItem> iterator = items.iterator();
+            while (iterator.hasNext()) {
+                FileItem item = iterator.next();
+                switch (item.getFieldName()) {
+                    case "file":
+                        files.add(item);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            FileUploadResponse result = new FileUploadResponse(new ArrayList<RmResource>());
+            if (type != null && files.size() > 0) {
+                for (FileItem file : files) {
+                    RmResource resource = fileSvc.uploadFile(file, type);
+                    result.getFiles().add(resource);
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            return new FileUploadResponse(new ArrayList<RmResource>());
+        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{resourceId}/{parentId}/assoc")
+    public RmResource assocResourceToParent(
+            @PathParam("resourceId") Integer resourceId,
+            @PathParam("parentId") Integer parentId) {
+        RmResource resource = fileSvc.assocResourceWithParent(resourceId, parentId);
+        return resource;
     }
 
     @GET

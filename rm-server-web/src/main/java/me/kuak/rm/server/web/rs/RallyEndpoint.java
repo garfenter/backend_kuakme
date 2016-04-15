@@ -133,16 +133,19 @@ public class RallyEndpoint {
     @GET
     @Path("/questions/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Question findQuestion(@PathParam("id")Integer id){
+    public Question findQuestion(@PathParam("id") Integer id) {
         return rallyDao.findQuestionByQuestionId(id);
     }
-            
+
     @POST
     @Path("/questions/{id}/answers")
     @Produces(MediaType.APPLICATION_JSON)
     public QuestionAnswerResponse addAnswer(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, QuestionAnswer answer) {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
         QuestionAnswer qa = answer;
+        for (RmResource resource : qa.getResources()) {
+            resource.setParent(qa);
+        }
         qa.setCreationDate(new Date());
         qa.setGroup(accessToken.getGroup());
         qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));

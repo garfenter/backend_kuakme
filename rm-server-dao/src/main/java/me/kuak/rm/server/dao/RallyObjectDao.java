@@ -12,7 +12,7 @@ public interface RallyObjectDao {
     void createRallyObject(RallyObject rallyObject);
     
     RallyObject findRallyObjectById(Integer id, Class clazz);
-    
+        
     List<? extends RallyObject> findRallyObjectByClass(Integer position, Integer limit, Class clazz);
     
     void updateRallyObject(RallyObject rallyObject);
