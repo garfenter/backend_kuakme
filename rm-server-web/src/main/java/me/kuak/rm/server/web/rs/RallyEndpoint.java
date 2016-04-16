@@ -102,6 +102,15 @@ public class RallyEndpoint {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
         return rallyDao.register(id, accessToken.getGroup().getId(), registrationInfo.getSelectedCountries());
     }
+    
+    @POST
+    @Path("/{id}/register/countries")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Registration registerCountries(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, RegistrationInfo registrationInfo) {
+        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        return rallyDao.registerCountries(id, accessToken.getGroup().getId(), registrationInfo.getSelectedCountries());
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
