@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -36,6 +37,10 @@ public class Rally extends RallyObject implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "level")
     private Level level;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "video")
+    private RmResource video;
 
     public Date getStartDate() {
         return startDate;
@@ -67,6 +72,14 @@ public class Rally extends RallyObject implements Serializable {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public RmResource getVideo() {
+        return video;
+    }
+
+    public void setVideo(RmResource video) {
+        this.video = video;
     }
 
 }
