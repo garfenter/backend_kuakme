@@ -9,7 +9,6 @@ import org.apache.commons.fileupload.FileItem;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.File;
-import java.util.Date;
 import me.kuak.rm.server.dao.RallyObjectDao;
 
 /**
@@ -64,6 +63,7 @@ public class FileSvcImpl implements FileSvc {
         }
         resource.setFilename(name);
         resource.setType(type);
+        resource.setType_("base");
         fileDao.save(resource);
         resource.setDownloadUrl("/rm-server-web/rs/files/" + resource.getId());
         return resource;
@@ -73,7 +73,7 @@ public class FileSvcImpl implements FileSvc {
     public File downloadFile(Integer id) {
         RmResource resource = fileDao.findById(id);
         if (resource != null) {
-            File file = new File(MAINDIR + (resource.getParent() == null ? "tmp" : resource.getParent().getId()) + "/" + resource.getFilename());
+            File file = new File(MAINDIR +  "tmp/" + resource.getFilename());
             System.out.println(file.getAbsolutePath());
             if (file.exists()) {
                 return file;
