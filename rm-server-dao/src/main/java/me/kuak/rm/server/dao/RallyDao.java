@@ -24,7 +24,7 @@ public interface RallyDao {
     
     public QuestionAnswer findAnswerById(Integer questionAnswerId);
     
-    public QuestionAnswer findAnswerById(Integer groupId, Integer questionId);
+    public QuestionAnswer findAnswerByGroupIdAndQuestionId(Integer groupId, Integer questionId);
     
     public List<MultipleValueQuestion> findMultipleValueQuestionsByRallyIdAndCountryId(Integer rallyId, Integer countryId);
     

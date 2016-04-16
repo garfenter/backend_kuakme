@@ -152,7 +152,7 @@ public class RallyEndpoint {
     public QuestionAnswerResponse addAnswer(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, QuestionAnswer answer) {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
 
-        QuestionAnswer qa = rallyDao.findAnswerById(accessToken.getId(), id);
+        QuestionAnswer qa = rallyDao.findAnswerByGroupIdAndQuestionId(accessToken.getGroup().getId(), id);
         if (qa == null) {
             qa = answer;
         } else {
