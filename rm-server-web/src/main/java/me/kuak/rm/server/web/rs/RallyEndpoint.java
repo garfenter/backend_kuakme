@@ -142,7 +142,13 @@ public class RallyEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public QuestionAnswerResponse addAnswer(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, QuestionAnswer answer) {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
-        QuestionAnswer qa = answer;
+
+        QuestionAnswer qa = rallyDao.findAnswerById(accessToken.getId(), id);
+        if (qa == null) {
+            qa = answer;
+        } else {
+            qa.setResources(answer.getResources());
+        }
         for (RmResource resource : qa.getResources()) {
             resource.setParent(qa);
             qa.setAnswer("URL:" + resource.getDownloadUrl());
