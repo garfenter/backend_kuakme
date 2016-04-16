@@ -64,7 +64,25 @@ public class RallyDb implements RallyDao {
         registration.setRegistrationDate(new Date());
         registration.setRally(entityManager.find(Rally.class, rallyId));
         registration.setGroup(entityManager.find(Group.class, groupId));
-        entityManager.persist(registration);
+        entityManager.merge(registration);
+        for (Country country : countries) {
+            RegistrationCountry registrationCountry = new RegistrationCountry();
+            registrationCountry.setCountry(country);
+            registrationCountry.setCreationDate(new Date());
+            registrationCountry.setRegistration(registration);
+            registrationCountry.setState(StatusType.ACTIVE);
+            entityManager.merge(registrationCountry);
+        }
+        return registration;
+    }
+
+    @Override
+    public Registration registerCountries(Integer rallyId, Integer groupId, List<Country> countries) {
+        TypedQuery<Registration>  q = entityManager.createNamedQuery("SELECT r FROM Registration r WHERE r.group.id = :groupId AND r.rally.id = :rallyId", Registration.class);
+        q.setParameter("groupId", groupId);
+        q.setParameter("rallyId", rallyId);
+        Registration registration = q.getSingleResult();
+        
         for (Country country : countries) {
             RegistrationCountry registrationCountry = new RegistrationCountry();
             registrationCountry.setCountry(country);
