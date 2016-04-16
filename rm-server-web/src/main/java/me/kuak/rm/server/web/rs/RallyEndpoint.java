@@ -145,6 +145,7 @@ public class RallyEndpoint {
         QuestionAnswer qa = answer;
         for (RmResource resource : qa.getResources()) {
             resource.setParent(qa);
+            qa.setAnswer("URL:" + resource.getDownloadUrl());
         }
         qa.setCreationDate(new Date());
         qa.setGroup(accessToken.getGroup());
