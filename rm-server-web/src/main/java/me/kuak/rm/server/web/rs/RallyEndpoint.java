@@ -98,9 +98,9 @@ public class RallyEndpoint {
     @Path("/{id}/register")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Registration register(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie, RegistrationInfo registrationInfo) {
+    public Registration register(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie) {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
-        return rallyDao.register(id, accessToken.getGroup().getId(), registrationInfo.getSelectedCountries());
+        return rallyDao.register(id, accessToken.getGroup().getId());
     }
     
     @POST

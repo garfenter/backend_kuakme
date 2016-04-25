@@ -59,20 +59,20 @@ public class RallyDb implements RallyDao {
     }
 
     @Override
-    public Registration register(Integer rallyId, Integer groupId, List<Country> countries) {
+    public Registration register(Integer rallyId, Integer groupId) {
         Registration registration = new Registration();
         registration.setRegistrationDate(new Date());
         registration.setRally(entityManager.find(Rally.class, rallyId));
         registration.setGroup(entityManager.find(Group.class, groupId));
         entityManager.merge(registration);
-        for (Country country : countries) {
+        /*for (Country country : countries) {
             RegistrationCountry registrationCountry = new RegistrationCountry();
             registrationCountry.setCountry(country);
             registrationCountry.setCreationDate(new Date());
             registrationCountry.setRegistration(registration);
             registrationCountry.setState(StatusType.ACTIVE);
             entityManager.merge(registrationCountry);
-        }
+        }*/
         return registration;
     }
 
