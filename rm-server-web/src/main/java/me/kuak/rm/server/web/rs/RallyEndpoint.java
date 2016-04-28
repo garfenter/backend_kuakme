@@ -21,6 +21,7 @@ import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.MultipleValueQuestion;
 import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
+import me.kuak.rm.server.model.QuestionAnswerState;
 import me.kuak.rm.server.model.Rally;
 import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.Ranking;
@@ -165,6 +166,7 @@ public class RallyEndpoint {
         qa.setCreationDate(new Date());
         qa.setGroup(accessToken.getGroup());
         qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));
+        qa.setQuestionAnswerState(QuestionAnswerState.SUBMITTED);
         rallyObjectDao.createRallyObject(qa);
 //        List<RallyCountry> rallyCountries = qa.getQuestion().getRallyCountry().getRally().getRallyCountries();
 //        Integer nextCountry = 0;
@@ -198,6 +200,7 @@ public class RallyEndpoint {
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
         QuestionAnswer questionAnswer = findQuestionAnswerById(id, answerId);
         questionAnswer.setPoints(answer.getPoints());
+        questionAnswer.setQuestionAnswerState(QuestionAnswerState.COMPLETED);
         rallyObjectDao.updateRallyObject(questionAnswer);
         return questionAnswer;
     }

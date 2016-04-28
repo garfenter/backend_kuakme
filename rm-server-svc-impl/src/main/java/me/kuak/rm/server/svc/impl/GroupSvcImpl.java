@@ -2,6 +2,7 @@ package me.kuak.rm.server.svc.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,8 @@ import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.model.Person;
+import me.kuak.rm.server.model.Question;
+import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.StatusType;
 import me.kuak.rm.server.svc.GroupSvc;
@@ -29,15 +32,15 @@ public class GroupSvcImpl implements GroupSvc {
 
     @EJB
     private GroupDao groupDao;
-    
+
     @EJB
     private RallyDao rallyDao;
-    
+
     @Override
     public List<Group> findAllActiveGroups() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<Group> findAll() {
         return groupDao.findAll();
@@ -82,13 +85,27 @@ public class GroupSvcImpl implements GroupSvc {
         Country selectedCountry = (Country) rallyObjectDao.findRallyObjectById(countryId, Country.class);
         Group group = (Group) rallyObjectDao.findRallyObjectById(groupId, Group.class);
         for (Registration registration : group.getRegistrations()) {
-            if(registration.getStatus().equals(StatusType.ACTIVE)){
+            if (registration.getStatus().equals(StatusType.ACTIVE)) {
                 registration.setSelectedCountry(selectedCountry);
                 rallyDao.updateRegistration(registration);
+                createQuestionsAnswers(registration, group, selectedCountry);
             }
         }
-        
+
         return group;
+    }
+
+    private void createQuestionsAnswers(Registration registration, Group group, Country selectedCountry) {
+        List<Question> questions = rallyDao.findQuestionsByRallyIdAndCountryId(registration.getRally().getId(), selectedCountry.getId());
+        for (Question question : questions) {
+            QuestionAnswer questionAnswer = new QuestionAnswer();
+            questionAnswer.setGroup(group);
+            questionAnswer.setQuestion(question);
+            questionAnswer.setPoints(0);
+            questionAnswer.setCreationDate(new Date());
+            questionAnswer.setStatus(StatusType.ACTIVE);
+            rallyObjectDao.createRallyObject(questionAnswer);
+        }
     }
 
 }

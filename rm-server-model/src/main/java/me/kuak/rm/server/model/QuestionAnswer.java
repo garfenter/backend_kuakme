@@ -28,6 +28,8 @@ public class QuestionAnswer extends RallyObject implements Serializable {
     private String answer;
     @Column(name = "points")
     private Integer points;
+    @Column(name = "question_answer_state")
+    private QuestionAnswerState questionAnswerState;
 
     public Group getGroup() {
         return group;
@@ -59,6 +61,14 @@ public class QuestionAnswer extends RallyObject implements Serializable {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public QuestionAnswerState getQuestionAnswerState() {
+        return questionAnswerState;
+    }
+
+    public void setQuestionAnswerState(QuestionAnswerState questionAnswerState) {
+        this.questionAnswerState = questionAnswerState;
     }
 
 }
