@@ -77,6 +77,12 @@ public class RallyDb implements RallyDao {
     }
 
     @Override
+    public Registration updateRegistration(Registration registration) {
+        entityManager.merge(registration);
+        return registration;
+    }
+
+    @Override
     public Registration registerCountries(Integer rallyId, Integer groupId, List<Country> countries) {
         TypedQuery<Registration>  q = entityManager.createQuery("SELECT r FROM Registration r WHERE r.group.id = :groupId AND r.rally.id = :rallyId", Registration.class);
         q.setParameter("groupId", groupId);

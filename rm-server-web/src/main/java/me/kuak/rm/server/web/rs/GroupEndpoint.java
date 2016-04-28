@@ -8,10 +8,13 @@ import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
+import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.AccessToken;
+import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.svc.GroupSvc;
@@ -29,6 +32,9 @@ public class GroupEndpoint {
 
     @EJB
     private AuthSvc authSvc;
+    
+    @EJB
+    private RallyObjectDao rallyObjectDao;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -61,5 +67,14 @@ public class GroupEndpoint {
             return null;
         }
     }
+    
+    @POST
+    @Path("/0/countries/{countryId}/select")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Group setSelectedCountry(@PathParam("countryId") int countryId, @CookieParam("at") Cookie cookie){
+        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        return groupSvc.setSelectedCountry(countryId, accessToken.getGroup().getId());
+    }
+
 
 }

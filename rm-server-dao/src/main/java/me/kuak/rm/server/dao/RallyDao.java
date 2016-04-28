@@ -34,6 +34,8 @@ public interface RallyDao {
     
     public Registration register(Integer rallyId, Integer groupId);
     
+    public Registration updateRegistration(Registration registration);
+    
     public Registration registerCountries(Integer rallyId, Integer groupId, List<Country> countries);
     
     public RallyCountry findRallyCountry(Integer rallyId, Integer countryId);

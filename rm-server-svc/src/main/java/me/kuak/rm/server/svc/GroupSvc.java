@@ -19,5 +19,7 @@ public interface GroupSvc {
     public List<Person> findGroupMembersByGroupId(Integer groupId);
     
     public List<Group> findAll();
+    
+    public Group setSelectedCountry(Integer countryId, Integer groupId);
 
 }

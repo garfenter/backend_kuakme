@@ -8,9 +8,13 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import me.kuak.rm.server.dao.GroupDao;
+import me.kuak.rm.server.dao.RallyDao;
 import me.kuak.rm.server.dao.RallyObjectDao;
+import me.kuak.rm.server.model.Country;
 import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.model.Person;
+import me.kuak.rm.server.model.Registration;
+import me.kuak.rm.server.model.StatusType;
 import me.kuak.rm.server.svc.GroupSvc;
 
 /**
@@ -25,6 +29,9 @@ public class GroupSvcImpl implements GroupSvc {
 
     @EJB
     private GroupDao groupDao;
+    
+    @EJB
+    private RallyDao rallyDao;
     
     @Override
     public List<Group> findAllActiveGroups() {
@@ -68,6 +75,20 @@ public class GroupSvcImpl implements GroupSvc {
     @Override
     public List<Person> findGroupMembersByGroupId(Integer groupId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Group setSelectedCountry(Integer countryId, Integer groupId) {
+        Country selectedCountry = (Country) rallyObjectDao.findRallyObjectById(countryId, Country.class);
+        Group group = (Group) rallyObjectDao.findRallyObjectById(groupId, Group.class);
+        for (Registration registration : group.getRegistrations()) {
+            if(registration.getStatus().equals(StatusType.ACTIVE)){
+                registration.setSelectedCountry(selectedCountry);
+                rallyDao.updateRegistration(registration);
+            }
+        }
+        
+        return group;
     }
 
 }
