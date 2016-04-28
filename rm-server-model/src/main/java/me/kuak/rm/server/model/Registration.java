@@ -43,6 +43,9 @@ public class Registration implements Serializable {
     private StatusType status;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "registration")
     private List<RegistrationCountry> registrationCountries;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "selected_country")
+    private Country selectedCountry;
 
     public Rally getRally() {
         return rally;
@@ -90,6 +93,14 @@ public class Registration implements Serializable {
 
     public void setRegistrationCountries(List<RegistrationCountry> registrationCountries) {
         this.registrationCountries = registrationCountries;
+    }
+
+    public Country getSelectedCountry() {
+        return selectedCountry;
+    }
+
+    public void setSelectedCountry(Country selectedCountry) {
+        this.selectedCountry = selectedCountry;
     }
 
 }
