@@ -64,6 +64,7 @@ public class RallyDb implements RallyDao {
         registration.setRegistrationDate(new Date());
         registration.setRally(entityManager.find(Rally.class, rallyId));
         registration.setGroup(entityManager.find(Group.class, groupId));
+        registration.setStatus(StatusType.ACTIVE);
         entityManager.merge(registration);
         /*for (Country country : countries) {
             RegistrationCountry registrationCountry = new RegistrationCountry();

@@ -198,7 +198,7 @@ public class RallyEndpoint {
     @Path("/questions/{id}/answers/{answerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public QuestionAnswer updateAnswer(@PathParam("id") Integer id, @PathParam("answerId") Integer answerId, @CookieParam("at") Cookie cookie, QuestionAnswer answer) {
-        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        //AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
         QuestionAnswer questionAnswer = findQuestionAnswerById(id, answerId);
         questionAnswer.setPoints(answer.getPoints());
         questionAnswer.setQuestionAnswerState(QuestionAnswerState.COMPLETED);
