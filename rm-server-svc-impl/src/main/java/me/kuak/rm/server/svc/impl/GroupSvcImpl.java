@@ -99,7 +99,7 @@ public class GroupSvcImpl implements GroupSvc {
         List<Question> questions = rallyDao.findQuestionsByRallyIdAndCountryId(registration.getRally().getId(), selectedCountry.getId());
         for (Question question : questions) {
             QuestionAnswer questionAnswer = new QuestionAnswer();
-            questionAnswer.setGroup(group);
+            questionAnswer.setRegistration(registration);
             questionAnswer.setQuestion(question);
             questionAnswer.setPoints(0);
             questionAnswer.setCreationDate(new Date());

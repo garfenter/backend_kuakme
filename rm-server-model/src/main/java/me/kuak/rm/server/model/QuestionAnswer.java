@@ -19,8 +19,9 @@ import javax.persistence.Table;
 public class QuestionAnswer extends RallyObject implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_")
-    private Group group;
+    @JoinColumn(name = "registration")
+    private Registration registration;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question")
     private Question question;
@@ -31,12 +32,12 @@ public class QuestionAnswer extends RallyObject implements Serializable {
     @Column(name = "question_answer_state")
     private QuestionAnswerState questionAnswerState;
 
-    public Group getGroup() {
-        return group;
+    public Registration getRegistration() {
+        return registration;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
     }
 
     public Question getQuestion() {

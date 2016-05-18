@@ -164,7 +164,8 @@ public class RallyEndpoint {
             qa.setAnswer("URL:" + resource.getDownloadUrl());
         }
         qa.setCreationDate(new Date());
-        qa.setGroup(accessToken.getGroup());
+        qa.setRegistration(accessToken.getGroup().getRegistrations().get(0));
+        
         qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));
         qa.setQuestionAnswerState(QuestionAnswerState.SUBMITTED);
         rallyObjectDao.createRallyObject(qa);
