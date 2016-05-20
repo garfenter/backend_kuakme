@@ -70,6 +70,31 @@ public class AuthSvcImpl implements AuthSvc {
         return accessTokenDao.findAccessTokenByCode(tokenCode);
     }
 
+    @Override
+    public AccessToken authenticate(String user, String password, String role) throws Exception {
+        AccessToken accessToken;
+        Group group = groupDao.findByUser(user);
+        if (group != null && group.getRole().equalsIgnoreCase(role)) {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] sendedPass = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (byte b : sendedPass) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            String strSendedPass = sb.toString();
+            if (strSendedPass != null && strSendedPass.equals(group.getPassword())) {
+                accessToken = generateAccessToken(group);
+                accessTokenDao.save(accessToken);
+            } else {
+                throw new ValidationException("Contraseña inválida");
+            }
+        } else {
+            throw new ValidationException("Grupo no existente");
+        }
+        return accessToken;
+    }
+
     public final class SessionTokenGenerator {
 
         private SecureRandom random = new SecureRandom();

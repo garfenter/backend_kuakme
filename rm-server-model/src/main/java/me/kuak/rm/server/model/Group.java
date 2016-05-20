@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "group_")
 @DiscriminatorValue("group")
 @NamedQueries(
-        @NamedQuery(name="Group.findByUser", query="select g from Group g where g.user = :user")
+        @NamedQuery(name = "Group.findByUser", query = "select g from Group g where g.user = :user")
 )
 @XmlRootElement
 public class Group extends RallyObject implements Serializable {
@@ -27,10 +27,10 @@ public class Group extends RallyObject implements Serializable {
     private String role;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
     private List<Person> members;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     private List<Registration> registrations;
-    
+
     @Column(name = "url")
     private String url;
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,23 +40,34 @@ public class Group extends RallyObject implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country")
     private Country country;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "institution")
     private Institution institution;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "level")
     private Level level;
-    
-    @OneToOne(fetch=FetchType.LAZY)
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar")
     private RmResource avatar;
 
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transport")
     private RmResource transport;
-    
+
+    @Column(name = "email")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -112,12 +123,12 @@ public class Group extends RallyObject implements Serializable {
     public void setCountry(Country country) {
         this.country = country;
     }
-    
-    public void setRole(String role){
+
+    public void setRole(String role) {
         this.role = role;
     }
-    
-    public String getRole(){
+
+    public String getRole() {
         return role;
     }
 

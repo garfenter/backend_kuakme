@@ -51,7 +51,7 @@ public class AuthEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response logoff() {
         try {
-            return Response.ok().cookie(new NewCookie("at", "")).build();
+            return Response.temporaryRedirect(new URI("/")).cookie(new NewCookie("at", "")).build();
         } catch (ValidationException v) {
             return Response.status(Status.FORBIDDEN).build();
         } catch (Throwable t) {

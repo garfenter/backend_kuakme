@@ -10,6 +10,9 @@ public interface AuthSvc {
 
     AccessToken authenticate(String user, String password) throws Exception;
     
+    AccessToken authenticate(String user, String password, String role) throws Exception;
+
+    
     AccessToken findAccessTokenByCode(String tokenCode);
     
 }
