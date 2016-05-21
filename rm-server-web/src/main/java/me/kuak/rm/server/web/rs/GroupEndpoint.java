@@ -78,7 +78,7 @@ public class GroupEndpoint {
     public QuestionAnswer findActiveQuestionAnswer(@CookieParam("at") Cookie cookie) {
         if (cookie != null) {
             AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
-            return groupDao.findActiveQuestionByGroup(accessToken.getId());
+            return groupDao.findActiveQuestionByGroup(accessToken.getGroup().getId());
         } else {
             return null;
         }

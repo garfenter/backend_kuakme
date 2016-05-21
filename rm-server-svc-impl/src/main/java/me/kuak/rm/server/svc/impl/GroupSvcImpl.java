@@ -16,6 +16,7 @@ import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.model.Person;
 import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
+import me.kuak.rm.server.model.QuestionAnswerState;
 import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.StatusType;
 import me.kuak.rm.server.svc.GroupSvc;
@@ -104,6 +105,7 @@ public class GroupSvcImpl implements GroupSvc {
             questionAnswer.setPoints(0);
             questionAnswer.setCreationDate(new Date());
             questionAnswer.setStatus(StatusType.ACTIVE);
+            questionAnswer.setQuestionAnswerState(QuestionAnswerState.ACTIVE);
             rallyObjectDao.createRallyObject(questionAnswer);
         }
     }
