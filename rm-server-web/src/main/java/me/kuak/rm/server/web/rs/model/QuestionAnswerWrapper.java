@@ -27,7 +27,7 @@ public class QuestionAnswerWrapper {
     public QuestionAnswerWrapper(QuestionAnswer source) {
         this.source = source;
         if (source.getRegistration() != null) {
-            this.user = source.getRegistration().getGroup().getName();
+            this.user = source.getRegistration().getGroup().getUser();
             this.country = source.getRegistration().getGroup().getCountry().getName();
         }
     }
