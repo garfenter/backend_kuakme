@@ -73,7 +73,7 @@ public class GroupEndpoint {
     }
 
     @GET
-    @Path("/0/answers?status=active")
+    @Path("/0/answers/active")
     @Produces(MediaType.APPLICATION_JSON)
     public QuestionAnswer findActiveQuestionAnswer(@CookieParam("at") Cookie cookie) {
         if (cookie != null) {
