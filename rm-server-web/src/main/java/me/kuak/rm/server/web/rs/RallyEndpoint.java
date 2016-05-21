@@ -168,6 +168,7 @@ public class RallyEndpoint {
         
         qa.setQuestion((Question) rallyObjectDao.findRallyObjectById(id, Question.class));
         qa.setQuestionAnswerState(QuestionAnswerState.SUBMITTED);
+        qa.setPoints(answer.getPoints());
         rallyObjectDao.createRallyObject(qa);
 //        List<RallyCountry> rallyCountries = qa.getQuestion().getRallyCountry().getRally().getRallyCountries();
 //        Integer nextCountry = 0;
