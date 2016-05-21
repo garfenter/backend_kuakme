@@ -49,7 +49,7 @@ public class AdminEndpoint {
             
             //NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
             
-            NewCookie cookie = new NewCookie("atAdmin", token.getToken(), "/", uri.getRequestUri().getHost(), "No comment", 360000, false);
+            NewCookie cookie = new NewCookie("atAdmin", token.getToken(), "/", "jirolabs.io", "No comment", 360000, false);
             return Response.temporaryRedirect(new URI("/rm-admin/index.html")).cookie(cookie).build();
         } catch (ValidationException v) {
             return Response.temporaryRedirect(new URI("/rm-admin/login.html?error=1")).build();
