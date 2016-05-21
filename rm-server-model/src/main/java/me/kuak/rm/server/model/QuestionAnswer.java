@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @DiscriminatorValue(value = "question-answer")
 public class QuestionAnswer extends RallyObject implements Serializable {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "registration")
     private Registration registration;
 
@@ -31,7 +31,10 @@ public class QuestionAnswer extends RallyObject implements Serializable {
     private Integer points;
     @Column(name = "question_answer_state")
     private QuestionAnswerState questionAnswerState;
-
+    
+    private String user;
+    private String country;
+    
     public Registration getRegistration() {
         return registration;
     }

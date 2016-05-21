@@ -29,6 +29,7 @@ import me.kuak.rm.server.model.Registration;
 import me.kuak.rm.server.model.RmResource;
 import me.kuak.rm.server.svc.AuthSvc;
 import me.kuak.rm.server.web.rs.model.QuestionAnswerResponse;
+import me.kuak.rm.server.web.rs.model.QuestionAnswerWrapper;
 import me.kuak.rm.server.web.rs.model.RegistrationInfo;
 
 /**
@@ -184,8 +185,8 @@ public class RallyEndpoint {
     @GET
     @Path("/questions/{id}/answers")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<QuestionAnswer> findQuestionAnswersByQuestionId(@PathParam("id") Integer id) {
-        return rallyDao.findAnswersByQuestionId(id);
+    public List<QuestionAnswerWrapper> findQuestionAnswersByQuestionId(@PathParam("id") Integer id) {
+        return QuestionAnswerWrapper.convertToQuestionsAnswersWrapper(rallyDao.findAnswersByQuestionId(id));
     }
 
     @GET
