@@ -139,7 +139,7 @@ public class RallyDb implements RallyDao {
 
     @Override
     public QuestionAnswer findAnswerByGroupIdAndQuestionId(Integer groupId, Integer questionId) {
-        TypedQuery<QuestionAnswer> qry = entityManager.createQuery("SELECT qa FROM QuestionAnswer qa WHERE qa.group.id = :groupId AND qa.question.id = :questionId", QuestionAnswer.class);
+        TypedQuery<QuestionAnswer> qry = entityManager.createQuery("SELECT qa FROM QuestionAnswer qa WHERE qa.registration.group.id = :groupId AND qa.question.id = :questionId", QuestionAnswer.class);
         qry.setParameter("groupId", groupId);
         qry.setParameter("questionId", questionId);
         List<QuestionAnswer> result = qry.getResultList();
