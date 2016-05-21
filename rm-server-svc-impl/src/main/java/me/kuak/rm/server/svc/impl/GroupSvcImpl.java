@@ -87,20 +87,13 @@ public class GroupSvcImpl implements GroupSvc {
     public Group setSelectedCountry(Integer countryId, Integer groupId) {
         Country selectedCountry = (Country) rallyObjectDao.findRallyObjectById(countryId, Country.class);
         Group group = (Group) rallyObjectDao.findRallyObjectById(groupId, Group.class);
-        
+
         for (Registration registration : group.getRegistrations()) {
             if (registration.getStatus().equals(StatusType.ACTIVE)) {
-                if(!isCountryRegistred(registration, group, selectedCountry)){
-                    registration.setSelectedCountry(selectedCountry);
-                    RegistrationCountry registrationCountry = new RegistrationCountry();
-                    registrationCountry.setCountry(selectedCountry);
-                    registrationCountry.setRegistration(registration);
-                    registrationCountry.setState(StatusType.ACTIVE);
-                    registrationCountry.setIndex(1);
-                    registration.getRegistrationCountries().add(registrationCountry);
-                    rallyDao.updateRegistration(registration);
-                    createQuestionsAnswers(registration, group, selectedCountry);
-                }
+                registration.setSelectedCountry(selectedCountry);
+                rallyDao.updateRegistration(registration);
+
+                createQuestionsAnswers(registration, group, selectedCountry);
             }
         }
 
@@ -110,24 +103,31 @@ public class GroupSvcImpl implements GroupSvc {
     private void createQuestionsAnswers(Registration registration, Group group, Country selectedCountry) {
         List<Question> questions = rallyDao.findQuestionsByRallyIdAndCountryId(registration.getRally().getId(), selectedCountry.getId());
         for (Question question : questions) {
-            QuestionAnswer questionAnswer = new QuestionAnswer();
-            questionAnswer.setRegistration(registration);
-            questionAnswer.setQuestion(question);
-            questionAnswer.setPoints(0);
-            questionAnswer.setCreationDate(new Date());
-            questionAnswer.setStatus(StatusType.ACTIVE);
-            questionAnswer.setQuestionAnswerState(QuestionAnswerState.ACTIVE);
-            rallyObjectDao.createRallyObject(questionAnswer);
+            if (!isQuestionAnswerCreated(registration, question)) {
+                QuestionAnswer questionAnswer = new QuestionAnswer();
+                questionAnswer.setRegistration(registration);
+                questionAnswer.setQuestion(question);
+                questionAnswer.setPoints(0);
+                questionAnswer.setCreationDate(new Date());
+                questionAnswer.setStatus(StatusType.ACTIVE);
+                questionAnswer.setQuestionAnswerState(QuestionAnswerState.ACTIVE);
+                rallyObjectDao.createRallyObject(questionAnswer);
+            }
         }
     }
 
     private boolean isCountryRegistred(Registration registration, Group group, Country selectedCountry) {
-        for(RegistrationCountry countries: registration.getRegistrationCountries()){
-            if(countries.getCountry().getId().equals(selectedCountry.getId())){
+        for (RegistrationCountry countries : registration.getRegistrationCountries()) {
+            if (countries.getCountry().getId().equals(selectedCountry.getId())) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean isQuestionAnswerCreated(Registration registration, Question question) {
+        QuestionAnswer answer = rallyDao.findAnswerByGroupIdAndQuestionId(registration.getGroup().getId(), question.getId());
+        return answer != null;
     }
 
 }
