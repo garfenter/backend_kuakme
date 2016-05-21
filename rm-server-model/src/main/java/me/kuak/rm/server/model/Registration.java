@@ -33,7 +33,7 @@ public class Registration implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rally")
     private Rally rally;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_")
     @XmlInverseReference(mappedBy="person")
     private Group group;
