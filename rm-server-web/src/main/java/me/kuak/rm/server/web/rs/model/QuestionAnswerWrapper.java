@@ -20,6 +20,10 @@ public class QuestionAnswerWrapper {
     private String user;
     private String country;
 
+    public QuestionAnswerWrapper() {
+        this.source = new QuestionAnswer();
+    }
+
     public QuestionAnswerWrapper(QuestionAnswer source) {
         this.source = source;
         if (source.getRegistration() != null) {
@@ -139,10 +143,10 @@ public class QuestionAnswerWrapper {
     public void setCountry(String country) {
         this.country = country;
     }
-    
-    public static List<QuestionAnswerWrapper> convertToQuestionsAnswersWrapper(List<QuestionAnswer> questionAnwers){
+
+    public static List<QuestionAnswerWrapper> convertToQuestionsAnswersWrapper(List<QuestionAnswer> questionAnwers) {
         List<QuestionAnswerWrapper> result = new ArrayList<>();
-        for(QuestionAnswer question: questionAnwers){
+        for (QuestionAnswer question : questionAnwers) {
             result.add(new QuestionAnswerWrapper(question));
         }
         return result;
