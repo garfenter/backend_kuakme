@@ -17,7 +17,9 @@ import me.kuak.rm.server.model.Person;
 import me.kuak.rm.server.model.Question;
 import me.kuak.rm.server.model.QuestionAnswer;
 import me.kuak.rm.server.model.QuestionAnswerState;
+import me.kuak.rm.server.model.RallyCountry;
 import me.kuak.rm.server.model.Registration;
+import me.kuak.rm.server.model.RegistrationCountry;
 import me.kuak.rm.server.model.StatusType;
 import me.kuak.rm.server.svc.GroupSvc;
 
@@ -85,11 +87,20 @@ public class GroupSvcImpl implements GroupSvc {
     public Group setSelectedCountry(Integer countryId, Integer groupId) {
         Country selectedCountry = (Country) rallyObjectDao.findRallyObjectById(countryId, Country.class);
         Group group = (Group) rallyObjectDao.findRallyObjectById(groupId, Group.class);
+        
         for (Registration registration : group.getRegistrations()) {
             if (registration.getStatus().equals(StatusType.ACTIVE)) {
-                registration.setSelectedCountry(selectedCountry);
-                rallyDao.updateRegistration(registration);
-                createQuestionsAnswers(registration, group, selectedCountry);
+                if(isCountryRegistred(registration, group, selectedCountry)){
+                    registration.setSelectedCountry(selectedCountry);
+                    RegistrationCountry registrationCountry = new RegistrationCountry();
+                    registrationCountry.setCountry(selectedCountry);
+                    registrationCountry.setRegistration(registration);
+                    registrationCountry.setState(StatusType.ACTIVE);
+                    registrationCountry.setIndex(1);
+                    registration.getRegistrationCountries().add(registrationCountry);
+                    rallyDao.updateRegistration(registration);
+                    createQuestionsAnswers(registration, group, selectedCountry);
+                }
             }
         }
 
@@ -108,6 +119,15 @@ public class GroupSvcImpl implements GroupSvc {
             questionAnswer.setQuestionAnswerState(QuestionAnswerState.ACTIVE);
             rallyObjectDao.createRallyObject(questionAnswer);
         }
+    }
+
+    private boolean isCountryRegistred(Registration registration, Group group, Country selectedCountry) {
+        for(RegistrationCountry countries: registration.getRegistrationCountries()){
+            if(countries.getCountry().getId().equals(selectedCountry.getId())){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

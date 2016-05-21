@@ -1,6 +1,7 @@
 package me.kuak.rm.server.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -88,6 +89,9 @@ public class Registration implements Serializable {
     }
 
     public List<RegistrationCountry> getRegistrationCountries() {
+        if(registrationCountries == null){
+            registrationCountries = new ArrayList<>();
+        }
         return registrationCountries;
     }
 
