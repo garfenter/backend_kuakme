@@ -90,7 +90,7 @@ public class GroupSvcImpl implements GroupSvc {
         
         for (Registration registration : group.getRegistrations()) {
             if (registration.getStatus().equals(StatusType.ACTIVE)) {
-                if(isCountryRegistred(registration, group, selectedCountry)){
+                if(!isCountryRegistred(registration, group, selectedCountry)){
                     registration.setSelectedCountry(selectedCountry);
                     RegistrationCountry registrationCountry = new RegistrationCountry();
                     registrationCountry.setCountry(selectedCountry);
