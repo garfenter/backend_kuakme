@@ -1,6 +1,7 @@
 package me.kuak.rm.server.web.rs;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.ValidationException;
@@ -33,16 +34,16 @@ public class AuthEndpoint {
     @POST
     @Path("authenticate")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response authenticate(@FormParam("user") String user, @FormParam("password") String password) {
+    public Response authenticate(@FormParam("user") String user, @FormParam("password") String password) throws URISyntaxException {
         try {
             AccessToken token = authSvc.authenticate(user, password);
             //NewCookie cookie = new NewCookie("at", token.getToken(), "/", uri.getBaseUri().getHost(), "No comment", 360000, false);
             NewCookie cookie = new NewCookie("at", token.getToken(), "/", "jirolabs.io", "No comment", 360000, false);
             return Response.temporaryRedirect(new URI("/auth/welcome.html")).cookie(cookie).build();
         } catch (ValidationException v) {
-            return Response.status(Status.FORBIDDEN).build();
+            return Response.temporaryRedirect(new URI("/#/login?error=1")).build();
         } catch (Throwable t) {
-            return Response.status(Status.FORBIDDEN).build();
+            return Response.temporaryRedirect(new URI("/#/login?error=1")).build();
         }
     }
 
