@@ -40,6 +40,8 @@ public class Ranking implements Serializable {
     private String country;
     @Column(name = "points")
     private Integer points;
+    @Column(name = "position")
+    private Integer position;
 
     public Integer getId() {
         return id;
@@ -79,6 +81,14 @@ public class Ranking implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
 }
