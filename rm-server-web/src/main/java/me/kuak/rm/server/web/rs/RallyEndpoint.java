@@ -1,5 +1,7 @@
 package me.kuak.rm.server.web.rs;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -116,8 +118,12 @@ public class RallyEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Rally> findActiveRallies() {
-        return rallyDao.findActiveRallies();
+    public List<Rally> findActiveRallies(@CookieParam("at") Cookie cookie) {
+        if(cookie == null){
+            return rallyDao.findActiveRallies();
+        }
+        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        return rallyDao.findActiveRalliesByLevel(accessToken.getGroup().getLevel().getId());
     }
 
     @GET
@@ -212,7 +218,28 @@ public class RallyEndpoint {
     @Path("{rallyId}/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ranking> findRankingByRallyId(@PathParam("rallyId") Integer rallyId) {
-        return rallyDao.findRankingsByRallyId(rallyId);
+        List<Ranking> rankings = rallyDao.findRankingsByRallyId(rallyId);
+        Collections.sort(rankings, new Comparator<Ranking>() {
+            @Override
+            public int compare(Ranking o1, Ranking o2) {
+                if(o1.getPoints() == o2.getPoints()){
+                    return 0;
+                }
+                return o1.getPoints() < o2.getPoints() ? 1 : -1;
+            }
+        });
+        int pos = 1;
+        int points = -1;
+        for (Ranking ranking : rankings) {
+            if (ranking.getPoints() < points || points < 0){
+                if (points >= 0){
+                    pos++;
+                }
+                points = ranking.getPoints();
+            }
+            ranking.setPosition(pos);
+        }
+        return rankings;
     }
 
 }

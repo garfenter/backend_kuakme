@@ -30,6 +30,8 @@ public interface RallyDao {
     
     public List<Rally> findActiveRallies();
     
+    public List<Rally> findActiveRalliesByLevel(Integer level);
+    
     public List<RallyCountry> findCountriesByRally(Integer rallyId);
     
     public Registration register(Integer rallyId, Integer groupId);

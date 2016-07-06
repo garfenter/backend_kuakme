@@ -120,7 +120,7 @@
                 <version>1.2.9</version>
                 <configuration>
                     <version>1.1</version>
-                    <basePath>http://localhost:8080/rm-server-web/rs/</basePath>
+                    <basePath>http://rallymatematico.com/rm-server-web/rs/</basePath>
                     <packages>
                         <package>me.kuak.rm.server.web.rs</package>
                         <package>me.kuak.rm.server.model</package>

@@ -50,6 +50,14 @@ public class RallyDb implements RallyDao {
         qry.setParameter("status", StatusType.ACTIVE);
         return qry.getResultList();
     }
+    
+    @Override
+    public List<Rally> findActiveRalliesByLevel(Integer level) {
+        TypedQuery<Rally> qry = entityManager.createQuery("SELECT r FROM Rally r WHERE r.status = :status AND r.level.id = :level", Rally.class);
+        qry.setParameter("status", StatusType.ACTIVE);
+        qry.setParameter("level", level);
+        return qry.getResultList();
+    }
 
     @Override
     public List<RallyCountry> findCountriesByRally(Integer rallyId) {
