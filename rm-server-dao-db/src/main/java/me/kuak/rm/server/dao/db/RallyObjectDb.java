@@ -36,8 +36,12 @@ public class RallyObjectDb implements RallyObjectDao {
     public List<? extends RallyObject> findRallyObjectByClass(Integer position, Integer limit, Class clazz) {
         String strQuery = "SELECT c FROM " + clazz.getSimpleName() + " c";
         TypedQuery qry = entityManager.createQuery(strQuery, clazz);
-        qry.setFirstResult(position);
-        qry.setMaxResults(limit);
+        if(position != null){
+            qry.setFirstResult(position);   
+        }
+        if(limit != null){
+            qry.setMaxResults(limit);
+        }
         return qry.getResultList();
     }
 

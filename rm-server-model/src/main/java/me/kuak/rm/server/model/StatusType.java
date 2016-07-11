@@ -8,5 +8,6 @@ public enum StatusType {
     ACTIVE,
     INACTIVE,
     DELETED,
-    COMPLETED
+    COMPLETED,
+    PAUSED
 }

@@ -87,7 +87,6 @@ public class GroupSvcImpl implements GroupSvc {
     public Group setSelectedCountry(Integer countryId, Integer groupId) {
         Country selectedCountry = (Country) rallyObjectDao.findRallyObjectById(countryId, Country.class);
         Group group = (Group) rallyObjectDao.findRallyObjectById(groupId, Group.class);
-
         for (Registration registration : group.getRegistrations()) {
             if (registration.getStatus().equals(StatusType.ACTIVE)) {
                 registration.setSelectedCountry(selectedCountry);

@@ -123,6 +123,9 @@ public class RallyEndpoint {
             return rallyDao.findActiveRallies();
         }
         AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        if("admin".equals(accessToken.getGroup().getRole())){
+            return rallyDao.findActiveRallies();
+        }
         return rallyDao.findActiveRalliesByLevel(accessToken.getGroup().getLevel().getId());
     }
 

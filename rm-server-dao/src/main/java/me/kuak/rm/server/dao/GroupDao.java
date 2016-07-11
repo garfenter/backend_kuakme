@@ -14,6 +14,8 @@ public interface GroupDao {
 
     List<Group> findAll();
     
+    List<Group> findByUserRole(Integer position, Integer limit, String role);
+    
     QuestionAnswer findActiveQuestionByGroup(Integer groupId);
     
 }

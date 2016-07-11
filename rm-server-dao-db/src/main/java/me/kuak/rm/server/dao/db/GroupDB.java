@@ -37,7 +37,21 @@ public class GroupDB implements GroupDao {
         TypedQuery<Group> query = entityManager.createQuery("select g from Group g", Group.class);
         return query.getResultList();
     }
-
+    
+    
+    @Override
+    public List<Group> findByUserRole(Integer position, Integer limit, String role){
+        TypedQuery<Group> query = entityManager.createQuery("SELECT g FROM Group g WHERE g.role = :role", Group.class);
+        if(position != null){
+            query.setFirstResult(position);
+        }
+        if(limit != null){
+            query.setMaxResults(limit);
+        }
+        query.setParameter("role", role);
+        return query.getResultList();
+    }
+    
     @Override
     public QuestionAnswer findActiveQuestionByGroup(Integer groupId) {
         TypedQuery<QuestionAnswer> qry = entityManager.createQuery("SELECT q FROM QuestionAnswer q WHERE q.registration.group.id = :groupId AND q.questionAnswerState IN :questionAnswerState", QuestionAnswer.class);
