@@ -90,8 +90,12 @@ public class GroupSvcImpl implements GroupSvc {
         for (Registration registration : group.getRegistrations()) {
             if (registration.getStatus().equals(StatusType.ACTIVE)) {
                 registration.setSelectedCountry(selectedCountry);
+                for (RegistrationCountry registrationCountry : registration.getRegistrationCountries()) {
+                    if(registrationCountry.getCountry().getId().equals(selectedCountry.getId())){
+                        registrationCountry.setState(StatusType.COMPLETED);
+                    }
+                }
                 rallyDao.updateRegistration(registration);
-
                 createQuestionsAnswers(registration, group, selectedCountry);
             }
         }

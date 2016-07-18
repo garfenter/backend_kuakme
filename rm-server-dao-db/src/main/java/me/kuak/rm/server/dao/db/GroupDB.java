@@ -54,9 +54,10 @@ public class GroupDB implements GroupDao {
     
     @Override
     public QuestionAnswer findActiveQuestionByGroup(Integer groupId) {
-        TypedQuery<QuestionAnswer> qry = entityManager.createQuery("SELECT q FROM QuestionAnswer q WHERE q.registration.group.id = :groupId AND q.questionAnswerState IN :questionAnswerState", QuestionAnswer.class);
+        TypedQuery<QuestionAnswer> qry = entityManager.createQuery("SELECT q FROM QuestionAnswer q WHERE q.registration.group.id = :groupId AND q.questionAnswerState IN :questionAnswerState AND q.question.type = :type", QuestionAnswer.class);
         qry.setParameter("groupId", groupId);
         qry.setParameter("questionAnswerState", Arrays.asList(QuestionAnswerState.ACTIVE, QuestionAnswerState.SUBMITTED));
+        qry.setParameter("type", "question");
         List<QuestionAnswer> result = qry.getResultList();
         if (result.isEmpty()) {
             return null;

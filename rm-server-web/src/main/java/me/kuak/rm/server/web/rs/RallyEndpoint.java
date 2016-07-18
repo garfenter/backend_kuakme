@@ -192,6 +192,15 @@ public class RallyEndpoint {
     }
 
     @GET
+    @Path("/questions/{id}/answers/0/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public QuestionAnswerWrapper findQuestionAnswersByGroupAndQuestionId(@PathParam("id") Integer id, @CookieParam("at") Cookie cookie){
+        AccessToken accessToken = authSvc.findAccessTokenByCode(cookie.getValue());
+        QuestionAnswer qa = rallyDao.findAnswerByGroupIdAndQuestionId(accessToken.getGroup().getId(), id);
+        return qa != null ? new QuestionAnswerWrapper(qa) : null;
+    }
+    
+    @GET
     @Path("/questions/{id}/answers")
     @Produces(MediaType.APPLICATION_JSON)
     public List<QuestionAnswerWrapper> findQuestionAnswersByQuestionId(@PathParam("id") Integer id) {

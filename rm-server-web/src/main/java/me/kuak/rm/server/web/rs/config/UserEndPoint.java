@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import me.kuak.rm.server.dao.RallyObjectDao;
 import me.kuak.rm.server.model.Group;
 import me.kuak.rm.server.model.StatusType;
+import me.kuak.rm.server.svc.GroupSvc;
 
 /**
  *
@@ -25,12 +26,15 @@ public class UserEndPoint implements BaseConfigEndpoint<Group> {
 
     @EJB
     RallyObjectDao rallyObjectDao;
+    
+    @EJB
+    GroupSvc groupSvc;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Override
     public void create(Group t) {
-        rallyObjectDao.createRallyObject(t);
+        groupSvc.createGroup(t);
     }
 
     @GET
